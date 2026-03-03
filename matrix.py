@@ -1,5 +1,6 @@
 VALIDATE: bool = True
 
+
 class Matrix:
     """A uniform mathematical matrix.
 
@@ -18,8 +19,7 @@ class Matrix:
     augmented: bool
 
     def __init__(self, data: list[list[float]]):
-        """Initializes the matrix with the given matrix data.
-        """
+        """Initializes the matrix with the given matrix data."""
 
         # ---- Validate
         if VALIDATE:
@@ -29,9 +29,7 @@ class Matrix:
             try:
                 data = list(data)
             except ValueError:
-                raise ValueError(
-                    "Initializer data is not castable to list"
-                )
+                raise ValueError("Initializer data is not castable to list")
 
             # Check dimensions
             self.dimensions = (len(data), len(data[0]))
@@ -115,12 +113,10 @@ class Matrix:
             self.data[col][row] *= factor
 
     def divide_row(self, row: int, divisor: float) -> None:
-
         for col in range(self._get_row_length()):
             self.data[col][row] /= divisor
 
     def swap_row(self, row_a: int, row_b: int) -> None:
-
         for col in range(self._get_row_length()):
             row_a_dat: float = self.data[col][row_a]
             self.data[col][row_a] = self.data[col][row_b]
@@ -131,12 +127,11 @@ class Matrix:
         active_row: int = 0
 
         for active_col in range(self.size):
-
             # Step 1: Swap out zero entries
             if self.data[active_col][active_row] == 0.0:
                 found_row: int = -1
                 # Look for a nonzero below
-                for row in range(active_row+1, self.size):
+                for row in range(active_row + 1, self.size):
                     if self.data[active_col][row] != 0:
                         found_row = row
                         break
@@ -152,7 +147,7 @@ class Matrix:
                 self.divide_row(active_row, self.data[active_col][active_row])
 
             # Step 3: Eliminate numbers under the active cell
-            for row in range(active_row+1, self.size):
+            for row in range(active_row + 1, self.size):
                 if self.data[active_col][row] != 0:
                     self.add_row(row, active_row, -self.data[active_col][row])
 
