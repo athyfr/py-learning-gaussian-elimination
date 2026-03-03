@@ -57,7 +57,10 @@ class Matrix:
                             "Matrix cell is not castable to float"
                         )
 
-            self.size = (dimensions[0] - (1 if augmented else 0), dimensions[1])
+            self.size = (
+                dimensions[0] - (1 if augmented else 0),
+                dimensions[1],
+            )
             self.augmented = augmented
 
         # --- Load
@@ -74,7 +77,7 @@ class Matrix:
 
         The math expression this represents is as follows:
         .. math::
-            $$\verb|factor| \cdot R_{\verb|row_b|} + R_{\verb|row_a|} \rightarrow R_{\verb|row_a|}$$
+            $$\\verb|factor| \\cdot R_{\\verb|row_b|} + R_{\\verb|row_a|} \\rightarrow R_{\\verb|row_a|}$$
 
         Row arguments indicate indices.
 
@@ -97,7 +100,7 @@ class Matrix:
         Performs Elementary Row Operation 2 on row ``row``, the nonzero scalar being ``factor``.
 
         ..math::
-            $$\verb|factor| \cdot R_{\verb|row|} \rightarrow R_{\verb|row|}$$
+            $$\\verb|factor| \\cdot R_{\\verb|row|} \\rightarrow R_{\\verb|row|}$$
 
         Args:
 
