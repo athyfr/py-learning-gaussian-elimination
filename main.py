@@ -30,7 +30,7 @@ while running:
         continue
 
     match choice:
-        case 1:
+        case 1:  # Check current matrix
             print("Printing matrix...")
 
             for row in range(matrix.size[1]):
@@ -41,21 +41,21 @@ while running:
                     print("|", matrix.data[matrix.size[0]][row], "]")
                 else:
                     print("]")
-        case 2:
+        case 2:  # Replace matrix
             print("Not yet implemented..")
-        case 3:
+        case 3:  # Replace matrix cell
             print("Not yet implemented..")
-        case 4:
+        case 4:  # Add row
             print("Not yet implemented..")
-        case 5:
+        case 5:  # Subtract row
             print("Not yet implemented..")
-        case 6:
+        case 6:  # Multiply row
             print("Not yet implemented..")
-        case 7:
+        case 7:  # Divide row
             print("Not yet implemented..")
-        case 8:
+        case 8:  # Swap row
             print("Not yet implemented..")
-        case 9:
+        case 9:  # Gaussian elimination
             numsol: int = matrix.gaussian_elimination()
 
             if not matrix.augmented:
