@@ -95,6 +95,10 @@ class Matrix:
         for col in range(self._get_row_length()):
             self.data[col][row_a] += self.data[col][row_b] * factor
 
+    def subtract_row(self, row_a: int, row_b: int, factor: float) -> None:
+        for col in range(self._get_row_length()):
+            self.data[col][row_a] -= self.data[col][row_b] * factor
+
     def multiply_row(self, row: int, factor: float) -> None:
         """Multiplies row ``row`` by ``factor``.
 
