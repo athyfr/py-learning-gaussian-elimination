@@ -5,6 +5,7 @@ running: bool = True
 matrix: Matrix = Matrix([[1.0, 0.0], [0.0, 1.0]], False)
 
 while running:
+    print("")
     print("What would you like to do?")
     print("1: Check current matrix")
     print("2: Replace matrix")
@@ -19,10 +20,12 @@ while running:
     choice: int
     try:
         choice = int(input("Enter number here: "))
+        print("")
         if choice < 1 or choice > 9:
             print("Choice number out of range! Try again!")
             continue
     except ValueError:
+        print("")
         print("That wasn't a number! Try again!")
         continue
 
