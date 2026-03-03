@@ -21,10 +21,10 @@ while running:
         choice = int(input("Enter number here: "))
         if choice < 1 or choice > 9:
             print("Choice number out of range! Try again!")
-            break
+            continue
     except ValueError:
         print("That wasn't a number! Try again!")
-        break
+        continue
 
     match choice:
         case 1:
