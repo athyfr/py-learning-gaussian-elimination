@@ -15,10 +15,10 @@ class Matrix:
     """
 
     data: list[list[float]]  # outer list is columns.
-    size: int
+    size: tuple[int, int]
     augmented: bool
 
-    def __init__(self, data: list[list[float]]):
+    def __init__(self, data: list[list[float]], augmented: bool):
         """Initializes the matrix with the given matrix data."""
 
         # ---- Validate
@@ -32,17 +32,10 @@ class Matrix:
                 raise ValueError("Initializer data is not castable to list")
 
             # Check dimensions
-            self.dimensions = (len(data), len(data[0]))
-
-            # Can be either augmented matrix, or regular (uniform) matrix
-            if self.dimensions[0] != self.dimensions[1] and \
-                self.dimensions[0] - 1 != self.dimensions[1]:
-                raise ValueError(
-                    "Matrix must be a uniform size (may be augmented)"
-                )
+            dimensions: tuple[int, int] = (len(data), len(data[0]))
 
             # Loop through columns
-            for col in range(self.dimensions[0]):
+            for col in range(dimensions[0]):
                 # Make sure columns is list
                 try:
                     data[col] = list(data[col])
@@ -52,12 +45,10 @@ class Matrix:
                     )
 
                 # Make sure column is correct size
-                if len(data[col]) != self.dimensions[1]:
-                    raise ValueError(
-                        "Matrix has inconsistent column size"
-                    )
+                if len(data[col]) != dimensions[1]:
+                    raise ValueError("Matrix has inconsistent column size")
 
-                for cell in range(self.dimensions[1]):
+                for cell in range(dimensions[1]):
                     # Make sure cell is correct type
                     try:
                         data[col][cell] = float(data[col][cell])
@@ -66,12 +57,15 @@ class Matrix:
                             "Matrix cell is not castable to float"
                         )
 
+            self.size = (dimensions[0] - (1 if augmented else 0), dimensions[1])
+            self.augmented = augmented
+
         # --- Load
 
         self.data = data
 
     def _get_row_length(self) -> int:
-        return self.size + (1 if self.augmented else 0)
+        return self.size[0] + (1 if self.augmented else 0)
 
     def add_row(self, row_a: int, row_b: int, factor: float) -> None:
         """Adds row ``row_b`` * ``factor`` to row ``row_a`` (replacing row ``row_a``) in the Matrix
@@ -126,12 +120,12 @@ class Matrix:
         # -- Forward steps
         active_row: int = 0
 
-        for active_col in range(self.size):
+        for active_col in range(self.size[0]):
             # Step 1: Swap out zero entries
             if self.data[active_col][active_row] == 0.0:
                 found_row: int = -1
                 # Look for a nonzero below
-                for row in range(active_row + 1, self.size):
+                for row in range(active_row + 1, self.size[1]):
                     if self.data[active_col][row] != 0:
                         found_row = row
                         break
@@ -147,8 +141,10 @@ class Matrix:
                 self.divide_row(active_row, self.data[active_col][active_row])
 
             # Step 3: Eliminate numbers under the active cell
-            for row in range(active_row + 1, self.size):
+            for row in range(active_row + 1, self.size[1]):
                 if self.data[active_col][row] != 0:
-                    self.add_row(row, active_row, -self.data[active_col][row])
+                    self.subtract_row(
+                        row, active_row, self.data[active_col][row]
+                    )
 
             active_row += 1
