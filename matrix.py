@@ -73,7 +73,7 @@ class Matrix:
     def _get_row_length(self) -> int:
         return self.size + (1 if self.augmented else 0)
 
-    def add_row(self, row_a: int, row_b: int, factor: float) -> None
+    def add_row(self, row_a: int, row_b: int, factor: float) -> None:
         """Adds row ``row_b`` * ``factor`` to row ``row_a`` (replacing row ``row_a``) in the Matrix
 
         Performs Elementary Row Operation 1 on row ``row_a``, adding row ``row_b`` with a factor of ``factor``.
