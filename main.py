@@ -30,12 +30,12 @@ while running:
         case 1:
             print("Printing matrix...")
 
-            for row in range(matrix.size):
+            for row in range(matrix.size[1]):
                 print("[", end="  ")
-                for col in range(matrix.size):
+                for col in range(matrix.size[0]):
                     print(matrix.data[col][row], sep="", end="  ")
                 if matrix.augmented:
-                    print("|", matrix.data[matrix.size][row], "]")
+                    print("|", matrix.data[matrix.size[0]][row], "]")
                 else:
                     print("]")
         case 2:
