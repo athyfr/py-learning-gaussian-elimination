@@ -6,11 +6,23 @@ from matrix import Matrix
 def cast_input(
     prompt: str,
     in_type: Callable,
+    additional_conditions: dict[str, Callable] = {},
     error_message: str = "Invalid entry! Try again!",
 ) -> Any:
     while True:
         try:
-            return in_type(input(prompt))
+            input_val = in_type(input(prompt))
+            
+            success: bool = True
+            for condition in additional_conditions.keys():
+                if not additional_conditions[condition]:
+                    print(condition)
+                    success = False
+            
+            if not success:
+                continue
+            
+            return input_val
         except ValueError:
             print(error_message)
 
