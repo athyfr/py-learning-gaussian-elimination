@@ -17,6 +17,7 @@
             (python.withPackages (
               ps: with ps; [
                 sphinx # Documentation generator
+                pytest # Unit test system
               ]
             ))
           ];

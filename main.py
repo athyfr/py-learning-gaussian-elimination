@@ -6,22 +6,28 @@ from matrix import Matrix
 def cast_input(
     prompt: str,
     in_type: Callable,
+    cancel_str: str = "",
     additional_conditions: dict[str, Callable] = {},
     error_message: str = "Invalid entry! Try again!",
-) -> Any:
+) -> Any | None:
     while True:
         try:
-            input_val = in_type(input(prompt))
-            
+            input_str = input(prompt)
+
+            if cancel_str != "" and input_str.lower().find(cancel_str) != -1:
+                return None
+
+            input_val = in_type(input_str)
+
             success: bool = True
             for condition in additional_conditions.keys():
-                if not additional_conditions[condition]:
+                if additional_conditions[condition]:
                     print(condition)
                     success = False
-            
+
             if not success:
                 continue
-            
+
             return input_val
         except ValueError:
             print(error_message)
@@ -30,18 +36,24 @@ def cast_input(
 def cast_input_list(
     prompt: str,
     in_type: Callable,
+    cancel_str: str = "cancel",
     num_val: int = -1,
     error_message: str = "Invalid entry! Try again!",
-) -> list[Any]:
+) -> list[Any] | None:
     while True:
         try:
-            input_str: list[str] = input(prompt).split(",")
+            input_str = input(prompt)
 
-            if num_val > -1 and len(input_str) != num_val:
+            if cancel_str != "" and input_str.lower().find(cancel_str) != -1:
+                return None
+
+            input_str_list: list[str] = input_str.split(",")
+
+            if num_val > -1 and len(input_str_list) != num_val:
                 raise ValueError
 
             input_val: list[Any] = []
-            for substr in input_str:
+            for substr in input_str_list:
                 input_val.append(in_type(substr))
 
             return input_val
@@ -67,17 +79,16 @@ def main():
         print("8: Swap row")
         print("9: Gaussian elimination")
 
-        choice: int
-        try:
-            choice = int(input("Enter number here: "))
-            print("")
-            if choice < 1 or choice > 9:
-                print("Choice number out of range! Try again!")
-                continue
-        except ValueError:
-            print("")
-            print("That wasn't a number! Try again!")
-            continue
+        choice = cast_input(
+            "Enter number here: ",
+            int,
+            additional_conditions={
+                "\nChoice number out of range! Try again!": lambda val: val
+                <= 0
+                or val > 9
+            },
+            error_message="\nThat wasn't a number! Try again!",
+        )
 
         match choice:
             case 1:  # Check current matrix
@@ -124,45 +135,19 @@ def main():
 
                     data.append(new_row)
 
-                augmented: bool = False
-                while True:
-                    try:
-                        augmented = bool(
-                            input("Is this matrix augmented? (True/False): ")
-                        )
-                        break
-                    except ValueError:
-                        print("Invalid entry! Try again!")
+                augmented: bool = cast_input(
+                    "Is this matrix augmented? (True/False): ", bool
+                )
 
                 matrix = Matrix(data, augmented)
             case 3:  # Replace matrix cell
-                cell_coord: tuple[int, int]
+                cell_coord: list[int] = cast_input_list(
+                    "Which cell? (x and y separated by comma): ", int, 2
+                )
 
-                while True:
-                    try:
-                        input_str: list[str] = input(
-                            "Which cell? (x and y separated by comma): "
-                        ).split(",")
-
-                        if len(input_str) != 2:
-                            raise ValueError
-
-                        cell_coord = (int(input_str[0]), int(input_str[1]))
-
-                        break
-                    except ValueError:
-                        print("Invalid entry! Try again!")
-
-                cell_content: float
-
-                while True:
-                    try:
-                        cell_content = float(
-                            input("What should be the new value?: ")
-                        )
-                        break
-                    except ValueError:
-                        print("Invalid entry! Try again!")
+                cell_content: float = cast_input(
+                    "What should be the new value?: ", float
+                )
 
                 matrix.data[cell_coord[0]][cell_coord[1]] = cell_content
 
