@@ -144,7 +144,7 @@ def main():
                 augmented: bool | None = cast_input(
                     "Is this matrix augmented? (True/False): ", bool
                 )
-                
+
                 if augmented is None:
                     print("Cancelling matrix replacement.")
                     continue
@@ -158,7 +158,7 @@ def main():
                 cell_content: float | None = cast_input(
                     "What should be the new value?: ", float
                 )
-                
+
                 if cell_coord is None or cell_content is None:
                     print("Cancelling replace matrix cell..")
                     continue
