@@ -6,7 +6,7 @@ from matrix import Matrix
 def cast_input(
     prompt: str,
     in_type: Callable,
-    cancel_str: str = "",
+    cancel_str: str = "cancel",
     additional_conditions: dict[str, Callable] = {},
     error_message: str = "Invalid entry! Try again!",
 ) -> Any | None:
