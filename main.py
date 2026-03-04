@@ -40,11 +40,11 @@ def cast_input_list(
             if num_val > -1 and len(input_str) != num_val:
                 raise ValueError
 
-            input_float: list[Any] = []
-            for val in input_str:
-                input_float.append(in_type(val))
+            input_val: list[Any] = []
+            for substr in input_str:
+                input_val.append(in_type(substr))
 
-            return input_float
+            return input_val
         except ValueError:
             print(error_message)
 
