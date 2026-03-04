@@ -140,19 +140,27 @@ def main():
 
                     data.append(new_row)
 
-                augmented: bool = cast_input(
+                augmented: bool | None = cast_input(
                     "Is this matrix augmented? (True/False): ", bool
                 )
+                
+                if augmented is None:
+                    print("Cancelling matrix replacement.")
+                    continue
 
                 matrix = Matrix(data, augmented)
             case 3:  # Replace matrix cell
-                cell_coord: list[int] = cast_input_list(
+                cell_coord: list[int] | None = cast_input_list(
                     "Which cell? (x and y separated by comma): ", int, 2
                 )
 
-                cell_content: float = cast_input(
+                cell_content: float | None = cast_input(
                     "What should be the new value?: ", float
                 )
+                
+                if cell_coord is None or cell_content is None:
+                    print("Cancelling replace matrix cell..")
+                    continue
 
                 matrix.data[cell_coord[0]][cell_coord[1]] = cell_content
 
