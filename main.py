@@ -78,8 +78,9 @@ def main():
         print("7: Divide row")
         print("8: Swap row")
         print("9: Gaussian elimination")
+        print("Cancel: Shut down program")
 
-        choice = cast_input(
+        choice: int | None = cast_input(
             "Enter number here: ",
             int,
             additional_conditions={
@@ -89,6 +90,10 @@ def main():
             },
             error_message="\nThat wasn't a number! Try again!",
         )
+        
+        if choice is None:
+            print("Goodbye!")
+            break
 
         match choice:
             case 1:  # Check current matrix
