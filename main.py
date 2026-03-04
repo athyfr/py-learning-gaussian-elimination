@@ -1,4 +1,40 @@
+from typing import Any, Callable
+
 from matrix import Matrix
+
+
+def cast_input(
+    prompt: str,
+    in_type: Callable,
+    error_message: str = "Invalid entry! Try again!",
+) -> Any:
+    while True:
+        try:
+            return in_type(input(prompt))
+        except ValueError:
+            print(error_message)
+
+
+def cast_input_list(
+    prompt: str,
+    in_type: Callable,
+    num_val: int = -1,
+    error_message: str = "Invalid entry! Try again!",
+) -> list[Any]:
+    while True:
+        try:
+            input_str: list[str] = input(prompt).split(",")
+
+            if num_val > -1 and len(input_str) != num_val:
+                raise ValueError
+
+            input_float: list[Any] = []
+            for val in input_str:
+                input_float.append(in_type(val))
+
+            return input_float
+        except ValueError:
+            print(error_message)
 
 
 def main():
