@@ -84,13 +84,14 @@ def main():
             "Enter number here: ",
             int,
             additional_conditions={
-                "\nChoice number out of range! Try again!": lambda val: val
-                <= 0
-                or val > 9
+                "\nChoice number out of range! Try again!":
+                    lambda val: val <= 0 or val > 9
             },
             error_message="\nThat wasn't a number! Try again!",
         )
-        
+
+        print("")
+
         if choice is None:
             print("Goodbye!")
             break
