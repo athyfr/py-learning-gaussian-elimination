@@ -11,7 +11,7 @@
       let
         pkgs = import nixpkgs { inherit system; };
       in
-      rec {
+      {
         devShell = pkgs.mkShell {
           buildInputs = with pkgs.python314Packages; [
             (python.withPackages (
