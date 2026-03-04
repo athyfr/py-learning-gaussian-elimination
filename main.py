@@ -21,7 +21,7 @@ def cast_input(
 
             success: bool = True
             for condition in additional_conditions.keys():
-                if additional_conditions[condition]:
+                if additional_conditions[condition](input_val):
                     print(condition)
                     success = False
 
