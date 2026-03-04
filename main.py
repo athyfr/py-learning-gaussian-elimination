@@ -36,8 +36,8 @@ def cast_input(
 def cast_input_list(
     prompt: str,
     in_type: Callable,
-    cancel_str: str = "cancel",
     num_val: int = -1,
+    cancel_str: str = "cancel",
     error_message: str = "Invalid entry! Try again!",
 ) -> list[Any] | None:
     while True:
