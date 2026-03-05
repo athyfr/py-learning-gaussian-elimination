@@ -61,6 +61,18 @@ def cast_input_list(
             print(error_message)
 
 
+def num_to_str(num: int | float) -> str:
+    if num is int:
+        return str(num)
+
+    output: str = str(num).removesuffix(".0")
+
+    if output == "-0":
+        output = "0"
+
+    return output
+
+
 def main():
     running: bool = True
 
