@@ -67,7 +67,7 @@ def main():
     matrix: Matrix = Matrix([[1.0, 0.0], [0.0, 1.0]], False)
 
     while running:
-        print("")
+        print()
         print("What would you like to do?")
         print("1: Check current matrix")
         print("2: Replace matrix")
@@ -90,7 +90,7 @@ def main():
             error_message="\nThat wasn't a number! Try again!",
         )
 
-        print("")
+        print()
 
         if choice is None:
             print("Goodbye!")
