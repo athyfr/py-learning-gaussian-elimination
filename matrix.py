@@ -19,7 +19,7 @@ class Matrix:
     size: tuple[int, int]
     augmented: bool
 
-    def __init__(self, data: list[list[float]], augmented: bool):
+    def __init__(self, data: list[list[float]], augmented: bool = False):
         """Initializes the matrix with the given matrix data."""
 
         # ---- Validate
