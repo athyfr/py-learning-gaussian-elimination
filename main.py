@@ -121,16 +121,35 @@ def main():
             case 1:  # Check current matrix
                 print("Printing matrix...")
 
+                # - Find each column's width
+                num_col: int = matrix._get_row_length()
+                column_width: list[int] = [0 for i in range(num_col)]
+
+                for col in range(matrix._get_row_length()):
+                    for cell in matrix.data[col]:
+                        column_width[col] = max(
+                            column_width[col], len(num_to_str(cell))
+                        )
+
+                # - Print
                 for row in range(matrix.size[1]):
-                    print("[", end="  ")
+                    print(end="[")
                     for col in range(matrix.size[0]):
-                        print(matrix.data[col][row], sep="", end="  ")
+                        print(end=" ")
+                        print(
+                            num_to_str(matrix.data[col][row]).rjust(
+                                column_width[col]
+                            ),
+                            end=" ",
+                        )
                     if matrix.augmented:
                         print(
                             "|",
-                            matrix.data[matrix.size[0]][row],
+                            num_to_str(matrix.data[matrix.size[0]][row]).rjust(
+                                column_width[-1]
+                            ),
                             "]",
-                            sep="  ",
+                            sep=" ",
                         )
                     else:
                         print("]")
