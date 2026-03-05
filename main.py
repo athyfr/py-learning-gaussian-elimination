@@ -224,8 +224,15 @@ def main():
 
                 matrix = Matrix(data, augmented)
             case 3:  # Replace matrix cell
+                num_col: int = matrix._get_row_length()
+                num_row: int = matrix.size[1]
                 cell_coord: list[int] | None = cast_input_list(
-                    "Which cell? (x and y separated by comma): ", int, 2
+                    "Which cell? (x and y separated by comma): ", int, 2, additional_conditions = {
+                        f"x must be within range (0 - {num_col-1})":
+                            lambda val: val[0] >= 0 and val[0] < num_col,
+                        f"y must be within range (0 - {num_row-1})":
+                            lambda val: val[1] >= 0 and val[1] < num_row
+                    }
                 )
 
                 cell_content: float | None = cast_input(
