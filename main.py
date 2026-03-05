@@ -76,7 +76,16 @@ def num_to_str(num: int | float) -> str:
 def main():
     running: bool = True
 
-    matrix: Matrix = Matrix([[1.0, 0.0], [0.0, 1.0]], False)
+    matrix: Matrix = Matrix(
+        [
+            [1, 2, 1, -1], # Column 1
+            [1, 0, 0, -1], # Column 2
+            [1, 0, -1, 1], # Column 3
+            [1, -1, 0, 1], # Column 4
+            [100, 0, 10, 0] # Augmented column
+        ],
+        augmented=True
+    )
 
     while running:
         print()
