@@ -1,5 +1,6 @@
-VALIDATE: bool = True
+import logging
 
+VALIDATE: bool = True
 
 class Matrix:
     """A uniform mathematical matrix.
@@ -29,6 +30,7 @@ class Matrix:
             try:
                 data = list(data)
             except ValueError:
+                logging.warning("Initializer data is not castable to list")
                 raise ValueError("Initializer data is not castable to list")
 
             # Check dimensions
@@ -40,12 +42,14 @@ class Matrix:
                 try:
                     data[col] = list(data[col])
                 except ValueError:
+                    logging.warning("Matrix column %s is not castable to list", col)
                     raise ValueError(
                         "Matrix column", col, "is not castable to list"
                     )
 
                 # Make sure column is correct size
                 if len(data[col]) != dimensions[1]:
+                    logging.warning("Matrix has inconsistent column size")
                     raise ValueError("Matrix has inconsistent column size")
 
                 for cell in range(dimensions[1]):
@@ -53,6 +57,7 @@ class Matrix:
                     try:
                         data[col][cell] = float(data[col][cell])
                     except ValueError:
+                        logging.warning("Matrix cell is not castable to float")
                         raise ValueError(
                             "Matrix cell is not castable to float"
                         )
@@ -124,8 +129,10 @@ class Matrix:
         active_row: int = 0
 
         for active_col in range(self.size[0]):
+            logging.info("Performing forward steps on column %s.", active_col)
             # Step 1: Swap out zero entries
             if self.data[active_col][active_row] == 0.0:
+                logging.info("This cell is zeroed! Attempting to swap rows..")
                 found_row: int = -1
                 # Look for a nonzero below
                 for row in range(active_row + 1, self.size[1]):
@@ -136,14 +143,17 @@ class Matrix:
                     # Swap, to get a nonzero here
                     self.swap_row(active_row, found_row)
                 else:
+                    logging.info(f"Giving up on column {active_col}.")
                     # Give up on this column.
                     break
 
             # Step 2: Normalize
             if self.data[active_col][active_row] != 1:
+                logging.info("Normalizing cell...")
                 self.divide_row(active_row, self.data[active_col][active_row])
 
             # Step 3: Eliminate numbers under the active cell
+            logging.info("Eliminating zeroes...")
             for row in range(active_row + 1, self.size[1]):
                 if self.data[active_col][row] != 0:
                     self.subtract_row(
