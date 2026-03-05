@@ -154,8 +154,19 @@ def main():
                     else:
                         print("]")
             case 2:  # Replace matrix
-                data: list[list[float]] = []
+                data: list[list[float]]
 
+                num_columns: int | None = cast_input(
+                    "How many columns does the matrix have?: ", int
+                )
+
+                if num_columns is None:
+                    print("Cancelling replace matrix...")
+                    continue
+
+                data = [[] for i in range(num_columns)]
+
+                print()
                 print("Enter each element of each row, separated by commas.")
                 print("Press enter to start a new row.")
                 print("Enter the word 'end' to end the matrix.")
@@ -167,7 +178,14 @@ def main():
                         break
 
                     new_row_str: list[str] = input_str.split(",")
+
+                    if len(new_row_str) != num_columns:
+                        print("Wrong number of values in row! Try again!")
+                        print("('cancel' to cancel matrix replacement)")
+                        continue
+
                     new_row: list[float] = []
+                    failure: bool = False
 
                     for cell in new_row_str:
                         try:
@@ -177,9 +195,14 @@ def main():
                                 "Something entered wasn't castable to float!"
                             )
                             print("Try again!")
-                            continue
+                            failure = True
+                            break
 
-                    data.append(new_row)
+                    if failure:
+                        continue
+
+                    for i in range(num_columns):
+                        data[i].append(new_row[i])
 
                 augmented: bool | None = cast_input(
                     "Is this matrix augmented? (True/False): ", bool
