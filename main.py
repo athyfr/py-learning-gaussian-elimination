@@ -223,7 +223,7 @@ def main():
                 )
 
                 if cell_coord is None or cell_content is None:
-                    print("Cancelling replace matrix cell..")
+                    print("Cancelling replace matrix cell...")
                     continue
 
                 matrix.data[cell_coord[0]][cell_coord[1]] = cell_content
