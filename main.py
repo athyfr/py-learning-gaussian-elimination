@@ -38,6 +38,7 @@ def cast_input_list(
     in_type: Callable,
     num_val: int = -1,
     cancel_str: str = "cancel",
+    additional_conditions: dict[str, Callable] = {},
     error_message: str = "Invalid entry! Try again!",
 ) -> list[Any] | None:
     while True:
@@ -55,6 +56,15 @@ def cast_input_list(
             input_val: list[Any] = []
             for substr in input_str_list:
                 input_val.append(in_type(substr))
+            
+            success: bool = True
+            for condition in additional_conditions.keys():
+                if additional_conditions[condition](input_val):
+                    print(condition)
+                    success = False
+            
+            if not success:
+                continue
 
             return input_val
         except ValueError:
