@@ -229,15 +229,123 @@ def main():
                 matrix.data[cell_coord[0]][cell_coord[1]] = cell_content
 
             case 4:  # Add row
-                print("Not yet implemented..")
+                row_a: int | None = cast_input(
+                    "Which row will be added to?: ", int
+                )
+
+                if row_a is None:
+                    print("Cancelling operation...")
+                    continue
+
+                row_b: int | None = cast_input(
+                    f"Which row will be added to row {row_a}?: ", int
+                )
+
+                if row_b is None:
+                    print("Cancelling operation...")
+                    continue
+
+                factor: float | None = cast_input(
+                    f"What will row {row_b} be multiplied by before being added to {row_a}?: ",
+                    float,
+                )
+
+                if factor is None:
+                    print("Cancelling operation...")
+                    continue
+
+                matrix.add_row(row_a, row_b, factor)
+
+                print(f"Added row {row_b} * {factor} to row {row_a}.")
             case 5:  # Subtract row
-                print("Not yet implemented..")
+                row_a: int | None = cast_input(
+                    "Which row will be subtracted from?: ", int
+                )
+
+                if row_a is None:
+                    print("Cancelling operation...")
+                    continue
+
+                row_b: int | None = cast_input(
+                    f"Which row will be subtracted from row {row_a}?: ", int
+                )
+
+                if row_b is None:
+                    print("Cancelling operation...")
+                    continue
+
+                factor: float | None = cast_input(
+                    f"What will row {row_b} be multiplied by before being subtracted from {row_a}?: ",
+                    float,
+                )
+
+                if factor is None:
+                    print("Cancelling operation...")
+                    continue
+
+                matrix.subtract_row(row_a, row_b, factor)
+
+                print(f"Subtracted row {row_b} * {factor} from row {row_a}.")
             case 6:  # Multiply row
-                print("Not yet implemented..")
+                row: int | None = cast_input(
+                    "Which row will be multiplied?: ", int
+                )
+
+                if row is None:
+                    print("Cancelling operation...")
+                    continue
+
+                factor: float | None = cast_input(
+                    f"What will row {row} be multiplied by?: ", float
+                )
+
+                if factor is None:
+                    print("Cancelling operation...")
+                    continue
+
+                matrix.multiply_row(row, factor)
+
+                print(f"Multiplied row {row} by {factor}.")
             case 7:  # Divide row
-                print("Not yet implemented..")
+                row: int | None = cast_input(
+                    "Which row will be divided?: ", int
+                )
+
+                if row is None:
+                    print("Cancelling operation...")
+                    continue
+
+                factor: float | None = cast_input(
+                    f"What will row {row} be divided by?: ", float
+                )
+
+                if factor is None:
+                    print("Cancelling operation...")
+                    continue
+
+                matrix.divide_row(row, factor)
+
+                print(f"Divided row {row} by {factor}.")
             case 8:  # Swap row
-                print("Not yet implemented..")
+                row_a: int | None = cast_input(
+                    "What is the first row to be swapped?: ", int
+                )
+
+                if row_a is None:
+                    print("Cancelling operation...")
+                    continue
+
+                row_b: int | None = cast_input(
+                    f"What row will row {row_a} be swapped with?: ", int
+                )
+
+                if row_b is None:
+                    print("Cancelling operation...")
+                    continue
+
+                matrix.swap_row(row_a, row_b)
+
+                print(f"Swapped rows {row_a} and {row_b}.")
             case 9:  # Gaussian elimination
                 free_vars: int = matrix.gaussian_elimination()
 
