@@ -22,7 +22,7 @@ def cast_input(
 
             success: bool = True
             for condition in additional_conditions.keys():
-                if additional_conditions[condition](input_val):
+                if not additional_conditions[condition](input_val):
                     print(condition)
                     success = False
 
@@ -60,7 +60,7 @@ def cast_input_list(
             
             success: bool = True
             for condition in additional_conditions.keys():
-                if additional_conditions[condition](input_val):
+                if not additional_conditions[condition](input_val):
                     print(condition)
                     success = False
             
