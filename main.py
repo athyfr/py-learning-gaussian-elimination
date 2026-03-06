@@ -439,6 +439,7 @@ def main():
         "Gaussian elimination": case_gaussian_elimination
     }
     option_keys: list = list(options.keys())
+    option_items: list = list(options.items())
 
     while running:
         print()
@@ -463,7 +464,7 @@ def main():
             print("Goodbye!")
             break
 
-        current_matrix = options.items[choice](current_matrix)
+        current_matrix = option_items[choice](current_matrix)
 
 
 if __name__ == "__main__":
