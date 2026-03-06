@@ -203,7 +203,7 @@ def case_replace_matrix_cell(given_matrix: Matrix) -> Matrix:
 
     if cell_coord is None or cell_content is None:
         print("Cancelling replace matrix cell...")
-        continue
+        return given_matrix
 
     given_matrix.data[cell_coord[0]][cell_coord[1]] = cell_content
 
