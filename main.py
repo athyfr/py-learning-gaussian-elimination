@@ -438,8 +438,8 @@ def main():
         "Swap row": case_swap_row,
         "Gaussian elimination": case_gaussian_elimination
     }
-    option_keys: list = list(options.keys())
-    option_items: list = list(options.items())
+    option_keys: list[str] = list(options.keys())
+    option_values: list[Callable[[Matrix], Matrix]] = list(options.values())
 
     while running:
         print()
@@ -464,7 +464,7 @@ def main():
             print("Goodbye!")
             break
 
-        current_matrix = option_items[choice](current_matrix)
+        current_matrix = option_values[choice](current_matrix)
 
 
 if __name__ == "__main__":
