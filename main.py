@@ -57,13 +57,13 @@ def cast_input_list(
             input_val: list[Any] = []
             for substr in input_str_list:
                 input_val.append(in_type(substr))
-            
+
             success: bool = True
             for condition in additional_conditions.keys():
                 if not additional_conditions[condition](input_val):
                     print(condition)
                     success = False
-            
+
             if not success:
                 continue
 
@@ -84,10 +84,339 @@ def num_to_str(num: int | float) -> str:
     return output
 
 
+def case_check_matrix(given_matrix: Matrix) -> Matrix:
+    print("Printing matrix...")
+
+    # - Find each column's width
+    num_col: int = given_matrix._get_row_length()
+    column_width: list[int] = [0 for i in range(num_col)]
+
+    for col in range(given_matrix._get_row_length()):
+        for cell in given_matrix.data[col]:
+            column_width[col] = max(
+                column_width[col], len(num_to_str(cell))
+            )
+
+    # - Print
+    for row in range(given_matrix.size[1]):
+        print(end="[")
+        for col in range(given_matrix.size[0]):
+            print(end=" ")
+            print(
+                num_to_str(given_matrix.data[col][row]).rjust(
+                    column_width[col]
+                ),
+                end=" ",
+            )
+        if given_matrix.augmented:
+            print(
+                "|",
+                num_to_str(given_matrix.data[given_matrix.size[0]][row]).rjust(
+                    column_width[-1]
+                ),
+                "]",
+                sep=" ",
+            )
+        else:
+            print("]")
+
+    return given_matrix
+
+
+def case_replace_matrix(given_matrix: Matrix) -> Matrix:
+    data: list[list[float]]
+
+    num_columns: int | None = cast_input(
+        "How many columns does the matrix have?: ", int
+    )
+
+    if num_columns is None:
+        print("Cancelling operation...")
+        return given_matrix
+
+    data = [[] for i in range(num_columns)]
+
+    print()
+    print("Enter each element of each row, separated by commas.")
+    print("Press enter to start a new row.")
+    print("Enter the word 'end' to end the matrix.")
+
+    while True:
+        input_str: str = input()
+
+        if input_str.find("end") != -1:
+            break
+
+        new_row_str: list[str] = input_str.split(",")
+
+        if len(new_row_str) != num_columns:
+            print("Wrong number of values in row! Try again!")
+            print("('cancel' to cancel matrix replacement)")
+            continue
+
+        new_row: list[float] = []
+        failure: bool = False
+
+        for cell in new_row_str:
+            try:
+                new_row.append(float(cell))
+            except ValueError:
+                print(
+                    "Something entered wasn't castable to float!"
+                )
+                print("Try again!")
+                failure = True
+                break
+
+        if failure:
+            continue
+
+        for i in range(num_columns):
+            data[i].append(new_row[i])
+
+    augmented: bool | None = cast_input(
+        "Is this matrix augmented? (True/False): ", bool
+    )
+
+    if augmented is None:
+        print("Cancelling operation...")
+        return given_matrix
+
+    return Matrix(data, augmented)
+
+
+def case_replace_matrix_cell(given_matrix: Matrix) -> Matrix:
+    num_col: int = given_matrix._get_row_length()
+    num_row: int = given_matrix.size[1]
+    cell_coord: list[int] | None = cast_input_list(
+        "Which cell? (x and y separated by comma): ", int, 2, additional_conditions = {
+            f"x must be within range (0 - {num_col-1})":
+                lambda val: val[0] < 0 or val[0] >= num_col,
+            f"y must be within range (0 - {num_row-1})":
+                lambda val: val[1] < 0 or val[1] >= num_row
+        }
+    )
+
+    cell_content: float | None = cast_input(
+        "What should be the new value?: ", float
+    )
+
+    if cell_coord is None or cell_content is None:
+        print("Cancelling replace matrix cell...")
+        continue
+
+    given_matrix.data[cell_coord[0]][cell_coord[1]] = cell_content
+
+    return given_matrix
+
+
+def case_add_row(given_matrix: Matrix) -> Matrix:
+    num_row: int = given_matrix.size[1]
+
+    row_a: int | None = cast_input(
+        "Which row will be added to?: ", int,
+        additional_conditions = {
+            f"Row must be within range (0 - {num_row-1})":
+                lambda val: val < 0 or val >= num_row
+        }
+    )
+
+    if row_a is None:
+        print("Cancelling operation...")
+        return given_matrix
+
+    row_b: int | None = cast_input(
+        f"Which row will be added to row {row_a}?: ", int,
+        additional_conditions = {
+            f"Row must be within range (0 - {num_row-1})":
+                lambda val: val < 0 or val >= num_row
+        }
+    )
+
+    if row_b is None:
+        print("Cancelling operation...")
+        return given_matrix
+
+    factor: float | None = cast_input(
+        f"What will row {row_b} be multiplied by before being added to {row_a}?: ",
+        float,
+    )
+
+    if factor is None:
+        print("Cancelling operation...")
+        return given_matrix
+
+    given_matrix.add_row(row_a, row_b, factor)
+
+    print(f"Added row {row_b} * {factor} to row {row_a}.")
+
+    return given_matrix
+
+
+def case_subtract_row(given_matrix: Matrix) -> Matrix:
+    num_row: int = given_matrix.size[1]
+
+    row_a: int | None = cast_input(
+        "Which row will be subtracted from?: ", int,
+        additional_conditions = {
+            f"Row must be within range (0 - {num_row-1})":
+                lambda val: val < 0 or val >= num_row
+        }
+    )
+
+    if row_a is None:
+        print("Cancelling operation...")
+        return given_matrix
+
+    row_b: int | None = cast_input(
+        f"Which row will be subtracted from row {row_a}?: ", int,
+        additional_conditions = {
+            f"Row must be within range (0 - {num_row-1})":
+                lambda val: val >= 0 and val < num_row
+        }
+    )
+
+    if row_b is None:
+        print("Cancelling operation...")
+        return given_matrix
+
+    factor: float | None = cast_input(
+        f"What will row {row_b} be multiplied by before being subtracted from {row_a}?: ",
+        float,
+    )
+
+    if factor is None:
+        print("Cancelling operation...")
+        return given_matrix
+
+    given_matrix.subtract_row(row_a, row_b, factor)
+
+    print(f"Subtracted row {row_b} * {factor} from row {row_a}.")
+
+    return given_matrix
+
+
+def case_multiply_row(given_matrix: Matrix) -> Matrix:
+    num_row: int = given_matrix.size[1]
+
+    print(num_row)
+
+    row: int | None = cast_input(
+        "Which row will be multiplied?: ", int,
+        additional_conditions = {
+            f"Row must be within range (0 - {num_row-1})":
+                lambda val: val >= 0 and val < num_row
+        }
+    )
+
+    if row is None:
+        print("Cancelling operation...")
+        return given_matrix
+
+    factor: float | None = cast_input(
+        f"What will row {row} be multiplied by?: ", float
+    )
+
+    if factor is None:
+        print("Cancelling operation...")
+        return given_matrix
+
+    given_matrix.multiply_row(row, factor)
+
+    print(f"Multiplied row {row} by {factor}.")
+
+    return given_matrix
+
+
+def case_divide_row(given_matrix: Matrix) -> Matrix:
+    num_row = given_matrix.size[1]
+
+    row: int | None = cast_input(
+        "Which row will be divided?: ", int,
+        additional_conditions = {
+            f"Row must be within range (0 - {num_row-1})":
+                lambda val: val >= 0 and val < num_row
+        }
+    )
+
+    if row is None:
+        print("Cancelling operation...")
+        return given_matrix
+
+    factor: float | None = cast_input(
+        f"What will row {row} be divided by?: ", float
+    )
+
+    if factor is None:
+        print("Cancelling operation...")
+        return given_matrix
+
+    given_matrix.divide_row(row, factor)
+
+    print(f"Divided row {row} by {factor}.")
+
+    return given_matrix
+
+
+def case_swap_row(given_matrix: Matrix) -> Matrix:
+    num_row: int = given_matrix.size[1]
+
+    row_a: int | None = cast_input(
+        "What is the first row to be swapped?: ", int,
+        additional_conditions = {
+            f"Row must be within range (0 - {num_row-1})":
+                lambda val: val >= 0 and val < num_row
+        }
+    )
+
+    if row_a is None:
+        print("Cancelling operation...")
+        return given_matrix
+
+    row_b: int | None = cast_input(
+        f"What row will row {row_a} be swapped with?: ", int,
+        additional_conditions = {
+            f"Row must be within range (0 - {num_row-1})":
+                lambda val: val >= 0 and val < num_row
+        }
+    )
+
+    if row_b is None:
+        print("Cancelling operation...")
+        return given_matrix
+
+    given_matrix.swap_row(row_a, row_b)
+
+    print(f"Swapped rows {row_a} and {row_b}.")
+    
+    return given_matrix
+
+
+def case_gaussian_elimination(given_matrix: Matrix) -> Matrix:
+    free_vars: int = given_matrix.gaussian_elimination()
+    
+    if not given_matrix.augmented:
+        print("Finished!")
+        
+        return given_matrix
+    
+    match free_vars:
+        case -1:
+            print("Finished! There are no solutions.")
+        case 0:
+            print("Finished! There is one solution.")
+        case _:
+            print(
+                f"Finished! There are {free_vars} free variables."
+            )
+    
+    return given_matrix
+
+
 def main():
     running: bool = True
 
-    matrix: Matrix = Matrix(
+    current_matrix: Matrix = Matrix(
         [
             [1, 2, 1, -1], # Column 1
             [1, 0, 0, -1], # Column 2
@@ -98,18 +427,24 @@ def main():
         augmented=True
     )
 
+    options: dict[str, Callable[[Matrix], Matrix]] = {
+        "Check current matrix": case_check_matrix,
+        "Replace matrix": case_replace_matrix,
+        "Replace matrix cell": case_replace_matrix_cell,
+        "Add row": case_add_row,
+        "Subtract row": case_subtract_row,
+        "Multiply row": case_multiply_row,
+        "Divide row": case_divide_row,
+        "Swap row": case_swap_row,
+        "Gaussian elimination": case_gaussian_elimination
+    }
+    option_keys: list = list(options.keys())
+
     while running:
         print()
         print("What would you like to do?")
-        print("1: Check current matrix")
-        print("2: Replace matrix")
-        print("3: Replace matrix cell")
-        print("4: Add row")
-        print("5: Subtract row")
-        print("6: Multiply row")
-        print("7: Divide row")
-        print("8: Swap row")
-        print("9: Gaussian elimination")
+        for i in range(len(options)):
+            print(f"{i}: {option_keys[i]}")
         print("Cancel: Shut down program")
 
         choice: int | None = cast_input(
@@ -117,7 +452,7 @@ def main():
             int,
             additional_conditions={
                 "\nChoice number out of range! Try again!":
-                    lambda val: val <= 0 or val > 9
+                    lambda val: val >= 0 and val < len(options)
             },
             error_message="\nThat wasn't a number! Try again!",
         )
@@ -128,257 +463,7 @@ def main():
             print("Goodbye!")
             break
 
-        match choice:
-            case 1:  # Check current matrix
-                print("Printing matrix...")
-
-                # - Find each column's width
-                num_col: int = matrix._get_row_length()
-                column_width: list[int] = [0 for i in range(num_col)]
-
-                for col in range(matrix._get_row_length()):
-                    for cell in matrix.data[col]:
-                        column_width[col] = max(
-                            column_width[col], len(num_to_str(cell))
-                        )
-
-                # - Print
-                for row in range(matrix.size[1]):
-                    print(end="[")
-                    for col in range(matrix.size[0]):
-                        print(end=" ")
-                        print(
-                            num_to_str(matrix.data[col][row]).rjust(
-                                column_width[col]
-                            ),
-                            end=" ",
-                        )
-                    if matrix.augmented:
-                        print(
-                            "|",
-                            num_to_str(matrix.data[matrix.size[0]][row]).rjust(
-                                column_width[-1]
-                            ),
-                            "]",
-                            sep=" ",
-                        )
-                    else:
-                        print("]")
-            case 2:  # Replace matrix
-                data: list[list[float]]
-
-                num_columns: int | None = cast_input(
-                    "How many columns does the matrix have?: ", int
-                )
-
-                if num_columns is None:
-                    print("Cancelling replace matrix...")
-                    continue
-
-                data = [[] for i in range(num_columns)]
-
-                print()
-                print("Enter each element of each row, separated by commas.")
-                print("Press enter to start a new row.")
-                print("Enter the word 'end' to end the matrix.")
-
-                while True:
-                    input_str: str = input()
-
-                    if input_str.find("end") != -1:
-                        break
-
-                    new_row_str: list[str] = input_str.split(",")
-
-                    if len(new_row_str) != num_columns:
-                        print("Wrong number of values in row! Try again!")
-                        print("('cancel' to cancel matrix replacement)")
-                        continue
-
-                    new_row: list[float] = []
-                    failure: bool = False
-
-                    for cell in new_row_str:
-                        try:
-                            new_row.append(float(cell))
-                        except ValueError:
-                            print(
-                                "Something entered wasn't castable to float!"
-                            )
-                            print("Try again!")
-                            failure = True
-                            break
-
-                    if failure:
-                        continue
-
-                    for i in range(num_columns):
-                        data[i].append(new_row[i])
-
-                augmented: bool | None = cast_input(
-                    "Is this matrix augmented? (True/False): ", bool
-                )
-
-                if augmented is None:
-                    print("Cancelling matrix replacement.")
-                    continue
-
-                matrix = Matrix(data, augmented)
-            case 3:  # Replace matrix cell
-                num_col: int = matrix._get_row_length()
-                num_row: int = matrix.size[1]
-                cell_coord: list[int] | None = cast_input_list(
-                    "Which cell? (x and y separated by comma): ", int, 2, additional_conditions = {
-                        f"x must be within range (0 - {num_col-1})":
-                            lambda val: val[0] >= 0 and val[0] < num_col,
-                        f"y must be within range (0 - {num_row-1})":
-                            lambda val: val[1] >= 0 and val[1] < num_row
-                    }
-                )
-
-                cell_content: float | None = cast_input(
-                    "What should be the new value?: ", float
-                )
-
-                if cell_coord is None or cell_content is None:
-                    print("Cancelling replace matrix cell...")
-                    continue
-
-                matrix.data[cell_coord[0]][cell_coord[1]] = cell_content
-
-            case 4:  # Add row
-                row_a: int | None = cast_input(
-                    "Which row will be added to?: ", int
-                )
-
-                if row_a is None:
-                    print("Cancelling operation...")
-                    continue
-
-                row_b: int | None = cast_input(
-                    f"Which row will be added to row {row_a}?: ", int
-                )
-
-                if row_b is None:
-                    print("Cancelling operation...")
-                    continue
-
-                factor: float | None = cast_input(
-                    f"What will row {row_b} be multiplied by before being added to {row_a}?: ",
-                    float,
-                )
-
-                if factor is None:
-                    print("Cancelling operation...")
-                    continue
-
-                matrix.add_row(row_a, row_b, factor)
-
-                print(f"Added row {row_b} * {factor} to row {row_a}.")
-            case 5:  # Subtract row
-                row_a: int | None = cast_input(
-                    "Which row will be subtracted from?: ", int
-                )
-
-                if row_a is None:
-                    print("Cancelling operation...")
-                    continue
-
-                row_b: int | None = cast_input(
-                    f"Which row will be subtracted from row {row_a}?: ", int
-                )
-
-                if row_b is None:
-                    print("Cancelling operation...")
-                    continue
-
-                factor: float | None = cast_input(
-                    f"What will row {row_b} be multiplied by before being subtracted from {row_a}?: ",
-                    float,
-                )
-
-                if factor is None:
-                    print("Cancelling operation...")
-                    continue
-
-                matrix.subtract_row(row_a, row_b, factor)
-
-                print(f"Subtracted row {row_b} * {factor} from row {row_a}.")
-            case 6:  # Multiply row
-                row: int | None = cast_input(
-                    "Which row will be multiplied?: ", int
-                )
-
-                if row is None:
-                    print("Cancelling operation...")
-                    continue
-
-                factor: float | None = cast_input(
-                    f"What will row {row} be multiplied by?: ", float
-                )
-
-                if factor is None:
-                    print("Cancelling operation...")
-                    continue
-
-                matrix.multiply_row(row, factor)
-
-                print(f"Multiplied row {row} by {factor}.")
-            case 7:  # Divide row
-                row: int | None = cast_input(
-                    "Which row will be divided?: ", int
-                )
-
-                if row is None:
-                    print("Cancelling operation...")
-                    continue
-
-                factor: float | None = cast_input(
-                    f"What will row {row} be divided by?: ", float
-                )
-
-                if factor is None:
-                    print("Cancelling operation...")
-                    continue
-
-                matrix.divide_row(row, factor)
-
-                print(f"Divided row {row} by {factor}.")
-            case 8:  # Swap row
-                row_a: int | None = cast_input(
-                    "What is the first row to be swapped?: ", int
-                )
-
-                if row_a is None:
-                    print("Cancelling operation...")
-                    continue
-
-                row_b: int | None = cast_input(
-                    f"What row will row {row_a} be swapped with?: ", int
-                )
-
-                if row_b is None:
-                    print("Cancelling operation...")
-                    continue
-
-                matrix.swap_row(row_a, row_b)
-
-                print(f"Swapped rows {row_a} and {row_b}.")
-            case 9:  # Gaussian elimination
-                free_vars: int = matrix.gaussian_elimination()
-
-                if not matrix.augmented:
-                    continue
-
-                match free_vars:
-                    case -1:
-                        print("Finished! There are no solutions.")
-                    case 0:
-                        print("Finished! There is one solution.")
-                    case _:
-                        print(
-                            f"Finished! There are {free_vars} free variables."
-                        )
+        current_matrix = options.items[choice](current_matrix)
 
 
 if __name__ == "__main__":
