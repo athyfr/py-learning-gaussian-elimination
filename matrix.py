@@ -73,6 +73,7 @@ class Matrix:
         self.data = data
 
     def get_row_length(self) -> int:
+        """Gets the row length of the Matrix including any augmented row"""
         return self.size[0] + (1 if self.augmented else 0)
 
     def add_row(self, row_a: int, row_b: int, factor: float) -> None:
