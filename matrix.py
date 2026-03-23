@@ -128,6 +128,8 @@ class Matrix:
         # -- Forward steps
         active_row: int = 0
 
+        leading_1_x_per_row: list[int] = []
+
         for active_col in range(self.size[0]):
             logging.info("Performing forward steps on column %s.", active_col)
             # Step 1: Swap out zero entries
@@ -160,4 +162,18 @@ class Matrix:
                         row, active_row, self.data[active_col][row]
                     )
 
+            leading_1_x_per_row.append(active_col)
             active_row += 1
+
+        # -- Backward steps
+        for leading_1_y in range(len(leading_1_x_per_row)):
+            active_col: int = leading_1_x_per_row[leading_1_y]
+
+            logging.info("Performing backward steps on column %s.", active_col)
+            # Eliminate numbers over the active cell
+            logging.info("Eliminating zeros...")
+            for row in range(leading_1_y):
+                if self.data[active_col][row] != 0:
+                    self.subtract_row(
+                        row, leading_1_y, self.data[active_col][row]
+                    )
