@@ -88,10 +88,10 @@ def case_check_matrix(given_matrix: Matrix) -> Matrix:
     print("Printing matrix...")
 
     # - Find each column's width
-    num_col: int = given_matrix._get_row_length()
+    num_col: int = given_matrix.get_row_length()
     column_width: list[int] = [0 for i in range(num_col)]
 
-    for col in range(given_matrix._get_row_length()):
+    for col in range(given_matrix.get_row_length()):
         for cell in given_matrix.data[col]:
             column_width[col] = max(
                 column_width[col], len(num_to_str(cell))
@@ -186,7 +186,7 @@ def case_replace_matrix(given_matrix: Matrix) -> Matrix:
 
 
 def case_replace_matrix_cell(given_matrix: Matrix) -> Matrix:
-    num_col: int = given_matrix._get_row_length()
+    num_col: int = given_matrix.get_row_length()
     num_row: int = given_matrix.size[1]
     cell_coord: list[int] | None = cast_input_list(
         "Which cell? (x and y separated by comma): ", int, 2, additional_conditions = {
