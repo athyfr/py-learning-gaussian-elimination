@@ -393,22 +393,14 @@ def case_swap_row(given_matrix: Matrix) -> Matrix:
 
 
 def case_gaussian_elimination(given_matrix: Matrix) -> Matrix:
-    free_vars: int = given_matrix.gaussian_elimination()
+    given_matrix.gaussian_elimination()
 
     if not given_matrix.augmented:
         print("Finished!")
 
         return given_matrix
 
-    match free_vars:
-        case -1:
-            print("Finished! There are no solutions.")
-        case 0:
-            print("Finished! There is one solution.")
-        case _:
-            print(
-                f"Finished! There are {free_vars} free variables."
-            )
+    print("Finished!")
 
     return given_matrix
 
