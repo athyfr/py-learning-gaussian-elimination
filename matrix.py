@@ -43,7 +43,9 @@ class Matrix:
                 try:
                     data[col] = list(data[col])
                 except ValueError:
-                    logging.warning("Matrix column %s is not castable to list", col)
+                    logging.warning(
+                        "Matrix column %s is not castable to list", col
+                    )
                     raise ValueError(
                         "Matrix column", col, "is not castable to list"
                     )
