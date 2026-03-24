@@ -27,6 +27,18 @@ class Matrix:
     ):
         """Initializes the matrix with the given matrix data."""
 
+        # -- Reflect data (if needed)
+
+        if reflect_data:
+            old_data: list[list[float]] = data
+            data = [[] for i in range(len(old_data[0]))]
+
+            for row in range(len(old_data)):
+                for col in range(len(old_data[0])):
+                    data[col].append(old_data[row][col])
+
+        # -- Initialize class variables
+
         dimensions: tuple[int, int] = (len(data), len(data[0]))
 
         self.size = (
