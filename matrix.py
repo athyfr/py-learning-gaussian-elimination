@@ -2,6 +2,7 @@ import logging
 
 VALIDATE: bool = True
 
+
 class Matrix:
     """A uniform mathematical matrix.
 
