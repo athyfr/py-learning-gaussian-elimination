@@ -139,3 +139,6 @@ class Matrix:
                     self.subtract_row(
                         row, leading_1_y, self.data[active_col][row]
                     )
+
+        # -- Remember that this is RREF
+        _is_rref = True
