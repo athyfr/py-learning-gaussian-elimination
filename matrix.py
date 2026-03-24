@@ -18,6 +18,7 @@ class Matrix:
     data: list[list[float]]  # outer list is columns.
     size: tuple[int, int]  # Excludes the augmented row if there is one.
     augmented: bool
+    _is_rref: bool = False
 
     def __init__(self, data: list[list[float]], augmented: bool = False):
         """Initializes the matrix with the given matrix data."""
@@ -125,7 +126,9 @@ class Matrix:
             self.data[col][row_a] = self.data[col][row_b]
             self.data[col][row_b] = row_a_dat
 
-    def gaussian_elimination(self):
+    def gaussian_elimination(self) -> None:
+        """Performs Gaussian Elimination to bring the matrix to RREF."""
+        logging.info("Function `gaussian_elimination` called...")
         # -- Forward steps
         active_row: int = 0
 
