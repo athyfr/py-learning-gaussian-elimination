@@ -138,7 +138,7 @@ class Matrix:
             logging.info("Performing forward steps on column %s.", active_col)
             # Step 1: Swap out zero entries
             if self.data[active_col][active_row] == 0.0:
-                logging.info("This cell is zeroed! Attempting to swap rows..")
+                logging.info("This cell is zero! Attempting to swap rows..")
                 found_row: int = -1
                 # Look for a nonzero below
                 for row in range(active_row + 1, self.size[1]):
