@@ -126,6 +126,8 @@ def case_check_matrix(given_matrix: Matrix) -> Matrix:
 def case_replace_matrix(given_matrix: Matrix) -> Matrix:
     data: list[list[float]]
 
+    #TODO: Modify case to use new Matrix reflect initializer argument.
+
     num_columns: int | None = cast_input(
         "How many columns does the matrix have?: ", int
     )
