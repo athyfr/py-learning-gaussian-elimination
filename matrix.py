@@ -16,7 +16,7 @@ class Matrix:
     """
 
     data: list[list[float]]  # outer list is columns.
-    size: tuple[int, int]
+    size: tuple[int, int]  # Excludes the augmented row if there is one.
     augmented: bool
 
     def __init__(self, data: list[list[float]], augmented: bool = False):
