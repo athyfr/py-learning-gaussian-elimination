@@ -1,7 +1,5 @@
 import logging
 
-VALIDATE: bool = True
-
 
 class Matrix:
     """A uniform mathematical matrix.
@@ -29,55 +27,13 @@ class Matrix:
     ):
         """Initializes the matrix with the given matrix data."""
 
-        # ---- Validate
-        if VALIDATE:
-            # - 1. Type and size check
-
-            # Make sure data is a list (supports duck-typing)
-            try:
-                data = list(data)
-            except ValueError:
-                logging.warning("Initializer data is not castable to list")
-                raise ValueError("Initializer data is not castable to list")
-
-            # Check dimensions
-            dimensions: tuple[int, int] = (len(data), len(data[0]))
-
-            # Loop through columns
-            for col in range(dimensions[0]):
-                # Make sure columns is list
-                try:
-                    data[col] = list(data[col])
-                except ValueError:
-                    logging.warning(
-                        "Matrix column %s is not castable to list", col
-                    )
-                    raise ValueError(
-                        "Matrix column", col, "is not castable to list"
-                    )
-
-                # Make sure column is correct size
-                if len(data[col]) != dimensions[1]:
-                    logging.warning("Matrix has inconsistent column size")
-                    raise ValueError("Matrix has inconsistent column size")
-
-                for cell in range(dimensions[1]):
-                    # Make sure cell is correct type
-                    try:
-                        data[col][cell] = float(data[col][cell])
-                    except ValueError:
-                        logging.warning("Matrix cell is not castable to float")
-                        raise ValueError(
-                            "Matrix cell is not castable to float"
-                        )
-
-            self.size = (
-                dimensions[0] - (1 if augmented else 0),
-                dimensions[1],
-            )
-            self.augmented = augmented
-
-        # --- Load
+        dimensions: tuple[int, int] = (len(data), len(data[0]))
+        
+        self.size = (
+            dimensions[0] - (1 if augmented else 0),
+            dimensions[1],
+        )
+        self.augmented = augmented
 
         self.data = data
 
