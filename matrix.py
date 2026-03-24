@@ -98,29 +98,23 @@ class Matrix:
             self.data[col][row_a] += self.data[col][row_b] * factor
 
     def subtract_row(self, row_a: int, row_b: int, factor: float) -> None:
+        """Subtracts row `row_b` \* `factor` from row `row_a`"""
         for col in range(self.get_row_length()):
             self.data[col][row_a] -= self.data[col][row_b] * factor
 
     def multiply_row(self, row: int, factor: float) -> None:
-        """Multiplies row ``row`` by ``factor``.
-
-        Performs Elementary Row Operation 2 on row ``row``, the nonzero scalar being ``factor``.
-
-        ..math::
-            $$\\verb|factor| \\cdot R_{\\verb|row|} \\rightarrow R_{\\verb|row|}$$
-
-        Args:
-
-        """
+        """Multiplies row ``row`` by ``factor``."""
 
         for col in range(self.get_row_length()):
             self.data[col][row] *= factor
 
     def divide_row(self, row: int, divisor: float) -> None:
+        """Divides row `row` by `divisor`."""
         for col in range(self.get_row_length()):
             self.data[col][row] /= divisor
 
     def swap_row(self, row_a: int, row_b: int) -> None:
+        """Swaps rows ``row_a`` and ``row_b``."""
         for col in range(self.get_row_length()):
             row_a_dat: float = self.data[col][row_a]
             self.data[col][row_a] = self.data[col][row_b]
