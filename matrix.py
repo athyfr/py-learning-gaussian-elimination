@@ -28,7 +28,7 @@ class Matrix:
         """Initializes the matrix with the given matrix data."""
 
         dimensions: tuple[int, int] = (len(data), len(data[0]))
-        
+
         self.size = (
             dimensions[0] - (1 if augmented else 0),
             dimensions[1],
