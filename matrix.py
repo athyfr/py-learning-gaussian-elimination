@@ -20,7 +20,12 @@ class Matrix:
     augmented: bool
     _is_rref: bool = False
 
-    def __init__(self, data: list[list[float]], augmented: bool = False):
+    def __init__(
+        self,
+        data: list[list[float]],
+        augmented: bool = False,
+        reflect_data: bool = False,
+    ):
         """Initializes the matrix with the given matrix data."""
 
         # ---- Validate
