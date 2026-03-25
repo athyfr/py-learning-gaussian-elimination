@@ -16,7 +16,7 @@
           buildInputs = with pkgs.python314Packages; [
             (python.withPackages (
               ps: with ps; [
-                sphinx # Documentation generator
+                # sphinx # Documentation generator
                 pytest # Unit test system
               ]
             ))
