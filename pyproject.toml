@@ -1,0 +1,34 @@
+[tool.ty.rules]
+unsupported-dynamic-base = "warn"
+division-by-zero = "warn"
+
+[tool.ruff]
+target-version = "py314"
+line-length = 79
+
+[tool.ruff.lint]
+select = [
+    "A", "ANN", "ARG", "B", "BLE", "C4", "C90", "COM", "D", "DOC", "E", "EM",
+    "ERA", "F", "FBT", "FIX", "FLY", "FURB", "G", "I", "ICN", "INT", "ISC",
+    "LOG", "N", "PERF", "PIE", "PLC", "PLE", "PLR", "PLW", "PT", "PTH", "Q",
+    "RET", "RSE", "SIM", "SLF", "T10", "TID", "TRY", "UP", "W"
+]
+ignore = [
+]
+
+
+# Allow all fixes.
+fixable = ["ALL"]
+unfixable = []
+
+[tool.ruff.lint.flake8-annotations]
+# Don't require annotation on __init__ return.
+mypy-init-return = true
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.format]
+# Format code snippets in docstrings.
+docstring-code-format = true
+line-ending = "lf"
