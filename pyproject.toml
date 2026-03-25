@@ -1,34 +1,34 @@
 [tool.ty.rules]
+# Enable all rules that aren't enabled by default.
 unsupported-dynamic-base = "warn"
 division-by-zero = "warn"
+possibly-missing-attribute = "warn"
+possibly-missing-import = "warn"
+possibly-unresolved-reference = "warn"
 
 [tool.ruff]
 target-version = "py314"
 line-length = 79
 
 [tool.ruff.lint]
+# Enable all rules that are possibly relevant to this project.
 select = [
     "A", "ANN", "ARG", "B", "BLE", "C4", "C90", "COM", "D", "DOC", "E", "EM",
     "ERA", "F", "FBT", "FIX", "FLY", "FURB", "G", "I", "ICN", "INT", "ISC",
     "LOG", "N", "PERF", "PIE", "PLC", "PLE", "PLR", "PLW", "PT", "PTH", "Q",
     "RET", "RSE", "SIM", "SLF", "T10", "TID", "TRY", "UP", "W"
 ]
-ignore = [
-]
-
-
-# Allow all fixes.
-fixable = ["ALL"]
-unfixable = []
 
 [tool.ruff.lint.flake8-annotations]
 # Don't require annotation on __init__ return.
 mypy-init-return = true
 
 [tool.ruff.lint.pydocstyle]
+# Assume Google-style docstrings when linting.
 convention = "google"
 
 [tool.ruff.format]
 # Format code snippets in docstrings.
 docstring-code-format = true
+# Use Unix-style line-endings.
 line-ending = "lf"
