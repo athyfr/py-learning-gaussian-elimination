@@ -1,4 +1,5 @@
 import pytest
+
 import matrix
 
 # -- Implementations of the Teacher's tests.
