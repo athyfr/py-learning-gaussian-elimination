@@ -2,6 +2,11 @@ import pytest
 
 import matrix
 
+# All sorts of bad practices are present here, but I've left them for
+# compatibility with the teacher's code. A better test module is present
+# as ``test_matrix.py``.
+
+# ruff: noqa
 
 # A wrapper for my implementation, with a signature copied from the
 # teacher's source files.
