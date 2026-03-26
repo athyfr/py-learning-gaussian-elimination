@@ -2,6 +2,7 @@ import pytest
 
 import matrix
 
+
 # A wrapper for my implementation, with a signature copied from the
 # teacher's source files.
 def twoRowGausian(A=[[1,0,0],[0,1,0]]):
