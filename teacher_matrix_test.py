@@ -1,6 +1,6 @@
 import pytest
 
-import matrix
+from matrix import Matrix
 
 # All sorts of bad practices are present here, but I've left them for
 # compatibility with the teacher's code. A better test module is present
@@ -13,8 +13,8 @@ import matrix
 def twoRowGausian(A=[[1,0,0],[0,1,0]]) -> tuple[list[list[float]], int]:
     # -- Initialize Matrix --
 
-    the_matrix: matrix.Matrix =\
-        matrix.Matrix(A, augmented=True, reflect_data=True)
+    the_matrix: Matrix =\
+        Matrix(A, augmented=True, reflect_data=True)
 
     # -- Change to RREF --
 
