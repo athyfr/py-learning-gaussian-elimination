@@ -57,6 +57,7 @@ select = [
   "UP",
   "W"
 ]
+ignore = ["ANN401"]
 
 [tool.ruff.lint.flake8-annotations]
 # Don't require annotation on __init__ return.
