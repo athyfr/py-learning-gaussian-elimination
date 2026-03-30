@@ -8,9 +8,12 @@ def cast_input(
     prompt: str,
     in_type: Callable,
     cancel_str: str = "cancel",
-    additional_conditions: dict[str, Callable] = {},
+    additional_conditions: dict[str, Callable] | None = None,
     error_message: str = "Invalid entry! Try again!",
 ) -> Any | None:
+    if additional_conditions is None:
+        additional_conditions = {}
+
     while True:
         try:
             input_str = input(prompt)
@@ -21,9 +24,9 @@ def cast_input(
             input_val = in_type(input_str)
 
             success: bool = True
-            for condition in additional_conditions.keys():
-                if not additional_conditions[condition](input_val):
-                    print(condition)
+            for message, condition in additional_conditions.items():
+                if not condition(input_val):
+                    print(message)
                     success = False
 
             if not success:
@@ -39,9 +42,12 @@ def cast_input_list(
     in_type: Callable,
     num_val: int = -1,
     cancel_str: str = "cancel",
-    additional_conditions: dict[str, Callable] = {},
+    additional_conditions: dict[str, Callable] | None = None,
     error_message: str = "Invalid entry! Try again!",
 ) -> list[Any] | None:
+    if additional_conditions is None:
+        additional_conditions = {}
+
     while True:
         try:
             input_str = input(prompt)
@@ -54,14 +60,12 @@ def cast_input_list(
             if num_val > -1 and len(input_str_list) != num_val:
                 raise ValueError
 
-            input_val: list[Any] = []
-            for substr in input_str_list:
-                input_val.append(in_type(substr))
+            input_val: list[Any] = [in_type(x) for x in input_str_list]
 
             success: bool = True
-            for condition in additional_conditions.keys():
-                if not additional_conditions[condition](input_val):
-                    print(condition)
+            for message, condition in additional_conditions.items():
+                if not condition(input_val):
+                    print(message)
                     success = False
 
             if not success:
@@ -94,7 +98,7 @@ def case_check_matrix(given_matrix: Matrix) -> Matrix:
     for col in range(given_matrix.get_row_length()):
         for cell in given_matrix.data[col]:
             column_width[col] = max(
-                column_width[col], len(num_to_str(cell))
+                column_width[col], len(num_to_str(cell)),
             )
 
     # - Print
@@ -104,7 +108,7 @@ def case_check_matrix(given_matrix: Matrix) -> Matrix:
             print(end=" ")
             print(
                 num_to_str(given_matrix.data[col][row]).rjust(
-                    column_width[col]
+                    column_width[col],
                 ),
                 end=" ",
             )
@@ -112,7 +116,7 @@ def case_check_matrix(given_matrix: Matrix) -> Matrix:
             print(
                 "|",
                 num_to_str(given_matrix.data[given_matrix.size[0]][row]).rjust(
-                    column_width[-1]
+                    column_width[-1],
                 ),
                 "]",
                 sep=" ",
@@ -129,7 +133,7 @@ def case_replace_matrix(given_matrix: Matrix) -> Matrix:
     #TODO: Modify case to use new Matrix reflect initializer argument.
 
     num_columns: int | None = cast_input(
-        "How many columns does the matrix have?: ", int
+        "How many columns does the matrix have?: ", int,
     )
 
     if num_columns is None:
@@ -164,7 +168,7 @@ def case_replace_matrix(given_matrix: Matrix) -> Matrix:
                 new_row.append(float(cell))
             except ValueError:
                 print(
-                    "Something entered wasn't castable to float!"
+                    "Something entered wasn't castable to float!",
                 )
                 print("Try again!")
                 failure = True
@@ -177,7 +181,7 @@ def case_replace_matrix(given_matrix: Matrix) -> Matrix:
             data[i].append(new_row[i])
 
     augmented: bool | None = cast_input(
-        "Is this matrix augmented? (True/False): ", bool
+        "Is this matrix augmented? (True/False): ", bool,
     )
 
     if augmented is None:
@@ -195,12 +199,12 @@ def case_replace_matrix_cell(given_matrix: Matrix) -> Matrix:
             f"x must be within range (0 - {num_col-1})":
                 lambda val: val[0] < 0 or val[0] >= num_col,
             f"y must be within range (0 - {num_row-1})":
-                lambda val: val[1] < 0 or val[1] >= num_row
-        }
+                lambda val: val[1] < 0 or val[1] >= num_row,
+        },
     )
 
     cell_content: float | None = cast_input(
-        "What should be the new value?: ", float
+        "What should be the new value?: ", float,
     )
 
     if cell_coord is None or cell_content is None:
@@ -219,8 +223,8 @@ def case_add_row(given_matrix: Matrix) -> Matrix:
         "Which row will be added to?: ", int,
         additional_conditions = {
             f"Row must be within range (0 - {num_row-1})":
-                lambda val: val < 0 or val >= num_row
-        }
+                lambda val: val < 0 or val >= num_row,
+        },
     )
 
     if row_a is None:
@@ -231,8 +235,8 @@ def case_add_row(given_matrix: Matrix) -> Matrix:
         f"Which row will be added to row {row_a}?: ", int,
         additional_conditions = {
             f"Row must be within range (0 - {num_row-1})":
-                lambda val: val < 0 or val >= num_row
-        }
+                lambda val: val < 0 or val >= num_row,
+        },
     )
 
     if row_b is None:
@@ -262,8 +266,8 @@ def case_subtract_row(given_matrix: Matrix) -> Matrix:
         "Which row will be subtracted from?: ", int,
         additional_conditions = {
             f"Row must be within range (0 - {num_row-1})":
-                lambda val: val < 0 or val >= num_row
-        }
+                lambda val: val < 0 or val >= num_row,
+        },
     )
 
     if row_a is None:
@@ -274,8 +278,8 @@ def case_subtract_row(given_matrix: Matrix) -> Matrix:
         f"Which row will be subtracted from row {row_a}?: ", int,
         additional_conditions = {
             f"Row must be within range (0 - {num_row-1})":
-                lambda val: val >= 0 and val < num_row
-        }
+                lambda val: val >= 0 and val < num_row,
+        },
     )
 
     if row_b is None:
@@ -307,8 +311,8 @@ def case_multiply_row(given_matrix: Matrix) -> Matrix:
         "Which row will be multiplied?: ", int,
         additional_conditions = {
             f"Row must be within range (0 - {num_row-1})":
-                lambda val: val >= 0 and val < num_row
-        }
+                lambda val: val >= 0 and val < num_row,
+        },
     )
 
     if row is None:
@@ -316,7 +320,7 @@ def case_multiply_row(given_matrix: Matrix) -> Matrix:
         return given_matrix
 
     factor: float | None = cast_input(
-        f"What will row {row} be multiplied by?: ", float
+        f"What will row {row} be multiplied by?: ", float,
     )
 
     if factor is None:
@@ -337,8 +341,8 @@ def case_divide_row(given_matrix: Matrix) -> Matrix:
         "Which row will be divided?: ", int,
         additional_conditions = {
             f"Row must be within range (0 - {num_row-1})":
-                lambda val: val >= 0 and val < num_row
-        }
+                lambda val: val >= 0 and val < num_row,
+        },
     )
 
     if row is None:
@@ -346,7 +350,7 @@ def case_divide_row(given_matrix: Matrix) -> Matrix:
         return given_matrix
 
     factor: float | None = cast_input(
-        f"What will row {row} be divided by?: ", float
+        f"What will row {row} be divided by?: ", float,
     )
 
     if factor is None:
@@ -367,8 +371,8 @@ def case_swap_row(given_matrix: Matrix) -> Matrix:
         "What is the first row to be swapped?: ", int,
         additional_conditions = {
             f"Row must be within range (0 - {num_row-1})":
-                lambda val: val >= 0 and val < num_row
-        }
+                lambda val: val >= 0 and val < num_row,
+        },
     )
 
     if row_a is None:
@@ -379,8 +383,8 @@ def case_swap_row(given_matrix: Matrix) -> Matrix:
         f"What row will row {row_a} be swapped with?: ", int,
         additional_conditions = {
             f"Row must be within range (0 - {num_row-1})":
-                lambda val: val >= 0 and val < num_row
-        }
+                lambda val: val >= 0 and val < num_row,
+        },
     )
 
     if row_b is None:
@@ -416,9 +420,9 @@ def main():
             [1, 0, 0, -1], # Column 2
             [1, 0, -1, 1], # Column 3
             [1, -1, 0, 1], # Column 4
-            [100, 0, 10, 0] # Augmented column
+            [100, 0, 10, 0], # Augmented column
         ],
-        augmented=True
+        augmented=True,
     )
 
     options: dict[str, Callable[[Matrix], Matrix]] = {
@@ -430,7 +434,7 @@ def main():
         "Multiply row": case_multiply_row,
         "Divide row": case_divide_row,
         "Swap row": case_swap_row,
-        "Gaussian elimination": case_gaussian_elimination
+        "Gaussian elimination": case_gaussian_elimination,
     }
     option_keys: list[str] = list(options.keys())
     option_values: list[Callable[[Matrix], Matrix]] = list(options.values())
@@ -447,7 +451,7 @@ def main():
             int,
             additional_conditions={
                 "\nChoice number out of range! Try again!":
-                    lambda val: val >= 0 and val < len(options)
+                    lambda val: val >= 0 and val < len(options),
             },
             error_message="\nThat wasn't a number! Try again!",
         )
