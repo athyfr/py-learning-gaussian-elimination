@@ -1,4 +1,4 @@
 import pytest
 
-import matrix
+from matrix import Matrix
 
