@@ -12,17 +12,16 @@
         pkgs = import nixpkgs { inherit system; };
       in
       {
-        devShell = pkgs.mkShell {
-          buildInputs = with pkgs.python314Packages; [
-            (python.withPackages (
-              ps: with ps; [
-                # sphinx # Documentation generator
-                pytest # Unit test system
-                pytest-cov
-                coverage
-              ]
-            ))
-          ];
+        devShell = with pkgs.python314Packages; pkgs.mkShell {
+          buildInputs = [ python ];
+          shellHook = ''
+            # Create/activate venv
+            ${python}/bin/python -m venv .venv
+            source .venv/bin/activate
+            
+            # Install packages
+            ${pip}/bin/pip install --require-virtualenv -r requirements.txt
+          '';
         };
       }
     );
