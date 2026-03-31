@@ -32,7 +32,7 @@ def matrix(matrix_data: tuple[list[list[float]], bool]) -> Matrix:
 
 
 def test_matrix_init(matrix_data: tuple[list[list[float]], bool]) -> None:
-    """Tests whether ``Matrix.__init__()`` properly initializes data."""
+    """Test ``__init__`` to ensure no exceptions, and correct data."""
     data, augmented = matrix_data
 
     matrix = Matrix(data, augmented)
