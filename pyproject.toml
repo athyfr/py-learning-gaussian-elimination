@@ -72,3 +72,10 @@ division-by-zero = "warn"
 possibly-missing-attribute = "warn"
 possibly-missing-import = "warn"
 possibly-unresolved-reference = "warn"
+
+[tool.ty.environment]
+# Configure
+python = ".venv/bin/python"
+python-platform = "all"
+python-version = "3.14"
+root = ["."]
