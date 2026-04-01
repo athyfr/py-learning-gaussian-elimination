@@ -18,7 +18,7 @@ from matrix import Matrix
         ),
     ],
 )
-def matrix_data(
+def matrix_data_fixture(
     request: pytest.FixtureRequest,
 ) -> tuple[list[list[float]], bool]:
     """Gets arbitrary (parametrized) matrix init data."""
@@ -26,16 +26,22 @@ def matrix_data(
 
 
 @pytest.fixture
-def matrix(matrix_data: tuple[list[list[float]], bool]) -> Matrix:
+def matrix_fixture(
+    matrix_data: tuple[list[list[float]], bool],
+) -> tuple[Matrix, list[list[float]], bool]:
     """Get an arbitrary (parametrized) ``Matrix``."""
-    return Matrix(matrix_data[0], matrix_data[1])
+    return (
+        Matrix(matrix_data[0], matrix_data[1]),
+        matrix_data[0],
+        matrix_data[1],
+    )
 
 
-def test_init_data(matrix_data: tuple[list[list[float]], bool]) -> None:
-    """Test ``__init__`` to ensure no exceptions, and correct data."""
-    data, augmented = matrix_data
-
-    matrix = Matrix(data, augmented)
+def test_init_data(
+    matrix_fixture: tuple[Matrix, list[list[float]], bool],
+) -> None:
+    """Test ``__init__`` to ensure data is passed along."""
+    matrix, data, augmented = matrix_fixture
 
     assert matrix.data == data
     assert matrix.augmented == augmented
