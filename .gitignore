@@ -1,5 +1,17 @@
-.direnv/
-__pycache__
+# Python
+__pycache__/
 .venv
+
+# Language servers
 .rumdl_cache
-.zed
+
+# Devenv
+.devenv*
+devenv.local.nix
+devenv.local.yaml
+
+# direnv
+.direnv/
+
+# pre-commit
+.pre-commit-config.yaml
