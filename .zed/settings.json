@@ -1,3 +1,12 @@
 {
   "project_name": "Gaussian Elimination",
+  "terminal": {
+    "shell": {
+      "with_arguments": {
+        "program": "devenv",
+        "args": ["shell"],
+        "title_override": "Gaussian Elimination — Devenv"
+      }
+    }
+  }
 }
