@@ -1,16 +1,15 @@
-from typing import Any
 from collections.abc import Callable
 
 from matrix import Matrix
 
 
-def cast_input(
+def cast_input[_T](
     prompt: str,
-    in_type: Callable,
+    in_type: Callable[[str], _T],
     cancel_str: str = "cancel",
-    additional_conditions: dict[str, Callable] | None = None,
+    additional_conditions: dict[str, Callable[[_T], bool]] | None = None,
     error_message: str = "Invalid entry! Try again!",
-) -> Any | None:
+) -> _T | None:
     if additional_conditions is None:
         additional_conditions = {}
 
@@ -29,20 +28,18 @@ def cast_input(
                     print(message)
                     success = False
 
-            if not success:
-                continue
-
-            return input_val
+            if success:
+                return input_val
         except ValueError:
             print(error_message)
 
 
-def cast_input_list(
+def cast_input_list[_T](
     prompt: str,
-    in_type: Callable,
+    in_type: Callable[[str], _T],
     num_val: int = -1,
     cancel_str: str = "cancel",
-    additional_conditions: dict[str, Callable] | None = None,
+    additional_conditions: dict[str, Callable[[list[_T]], bool]] | None = None,
     error_message: str = "Invalid entry! Try again!",
 ) -> list[Any] | None:
     if additional_conditions is None:
