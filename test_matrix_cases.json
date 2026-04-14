@@ -1,0 +1,45 @@
+{
+  "matrix_2x2_rref": {
+    "data": [
+      [1, 0],
+      [0, 1]
+    ]
+  },
+
+  "matrix_2x2_all_zeros": {
+    "data": [
+      [0, 0],
+      [0, 0]
+    ]
+  },
+
+  "matrix_3x3_augmented_rref": {
+    "data": [
+      [1, 0, 0, 1],
+      [0, 0, 0, 0],
+      [0, 0, 1, 3]
+    ]
+  },
+
+  "matrix_6x3_augmented_rref": {
+    "data": [
+      [0, 1, 2, 3, 0, 4],
+      [0, 0, 0, 0, 1, 5],
+      [0, 0, 0, 0, 0, 0]
+    ]
+  },
+
+  "matrix_2x2_augmented_rref": {
+    "data": [
+      [1, 0, 1],
+      [0, 1, 2]
+    ]
+  },
+
+  "matrix_2x2_augmented_rref_inconsistent": {
+    "data": [
+      [1, 1, 0],
+      [0, 0, 1]
+    ]
+  }
+}
