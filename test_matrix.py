@@ -1,6 +1,7 @@
 import itertools
-import pytest
 import random
+
+import pytest
 
 from matrix import Matrix
 
