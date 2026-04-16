@@ -1,3 +1,4 @@
+"""Test module for the Matrix class."""
 from matrix import Matrix
 
 
