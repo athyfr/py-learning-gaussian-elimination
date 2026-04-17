@@ -4,7 +4,7 @@ import matrix_types_for_tests as mtft
 
 
 def test_init(
-    matrix_init_data_fixture: mtft.MatrixInitData,
+    matrix_init_data_fixture: mtft.InitData,
 ) -> None:
     """Test ``__init__()`` for exceptions, and correct assignments."""
     data, augmented = matrix_init_data_fixture
@@ -16,7 +16,7 @@ def test_init(
 
 
 def test_get_row_length(
-    matrix_class_with_init_data_fixture: mtft.MatrixWithInitData,
+    matrix_class_with_init_data_fixture: mtft.ClassWithInitData,
 ) -> None:
     """Test ``get_row_length()`` for incorrect output."""
     test_matrix, (data, augmented) = matrix_class_with_init_data_fixture

@@ -15,7 +15,7 @@ with Path("test_matrix_cases.json").open() as f:
 @pytest.fixture(params=matrices)
 def matrix_init_data_fixture(
     request: pytest.FixtureRequest,
-) -> mtft.MatrixInitData:
+) -> mtft.InitData:
     """Get initializer data for a Matrix."""
     matrix_dict: dict = request.param
     matrix_dict.setdefault("augmented", False)
@@ -24,8 +24,8 @@ def matrix_init_data_fixture(
 
 @pytest.fixture
 def matrix_class_with_init_data_fixture(
-    matrix_init_data_fixture: mtft.MatrixInitData,
-) -> mtft.MatrixWithInitData:
+    matrix_init_data_fixture: mtft.InitData,
+) -> mtft.ClassWithInitData:
     """Get a pre-initialized Matrix along with init data."""
     data, augmented = matrix_init_data_fixture
 

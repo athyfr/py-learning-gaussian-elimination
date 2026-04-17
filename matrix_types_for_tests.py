@@ -2,5 +2,5 @@
 
 import matrix
 
-MatrixInitData = tuple[matrix.Data, bool]
-MatrixWithInitData = tuple[matrix.Matrix, MatrixInitData]
+InitData = tuple[matrix.Data, bool]
+ClassWithInitData = tuple[matrix.Matrix, InitData]
