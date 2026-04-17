@@ -1,8 +1,8 @@
 import logging
 
 # Type hint definitions:
-Data = type[list[list[float]]]
-Size = type[tuple[int, int]]
+Data = list[list[float]]
+Size = tuple[int, int]
 
 class Matrix:
     """A uniform mathematical matrix.
