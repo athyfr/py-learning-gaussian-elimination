@@ -14,5 +14,5 @@ def matrix_init_data_fixture(
     request: pytest.FixtureRequest,
 ) -> tuple[list[list[float]], bool]:
     """Get initializer data for a Matrix."""
-    matrix: dict = request.param
-    return matrix["data"], matrix["augmented"]
+    matrix_dict: dict = request.param
+    return matrix_dict["data"], matrix_dict["augmented"]
