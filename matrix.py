@@ -1,8 +1,8 @@
 import logging
 
 # Type hint definitions:
-Data = list[list[float]]
-Size = tuple[int, int]
+Data = list[list[float]]  # outer list is columns.
+Size = tuple[int, int]  # Excludes the augmented row if there is one.
 
 class Matrix:
     """A uniform mathematical matrix.
@@ -17,8 +17,8 @@ class Matrix:
 
     """
 
-    data: Data  # outer list is columns.
-    size: Size  # Excludes the augmented row if there is one.
+    data: Data
+    size: Size
     augmented: bool
     _is_rref: bool = False
 
