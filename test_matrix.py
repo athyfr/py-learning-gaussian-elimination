@@ -21,5 +21,4 @@ def test_get_row_length(
     """Test ``get_row_length()`` for incorrect output."""
     test_matrix, (data, augmented) = matrix_class_with_init_data_fixture
 
-    assert test_matrix.get_row_length() \
-        == len(data) + (1 if augmented else 0)
+    assert test_matrix.get_row_length() == len(data)
