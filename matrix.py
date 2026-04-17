@@ -1,5 +1,8 @@
 import logging
 
+# Type hint definitions:
+Data = type[list[list[float]]]
+Size = type[tuple[int, int]]
 
 class Matrix:
     """A uniform mathematical matrix.
@@ -14,14 +17,14 @@ class Matrix:
 
     """
 
-    data: list[list[float]]  # outer list is columns.
-    size: tuple[int, int]  # Excludes the augmented row if there is one.
+    data: Data  # outer list is columns.
+    size: Size  # Excludes the augmented row if there is one.
     augmented: bool
     _is_rref: bool = False
 
     def __init__(
         self,
-        data: list[list[float]],
+        data: Data,
         augmented: bool = False,
         reflect_data: bool = False,
     ):
@@ -30,7 +33,7 @@ class Matrix:
         # -- Reflect data (if needed)
 
         if reflect_data:
-            old_data: list[list[float]] = data
+            old_data: Data = data
             data = [[] for i in range(len(old_data[0]))]
 
             for row in range(len(old_data)):
@@ -39,7 +42,7 @@ class Matrix:
 
         # -- Initialize class variables
 
-        dimensions: tuple[int, int] = (len(data), len(data[0]))
+        dimensions: Size = (len(data), len(data[0]))
 
         self.size = (
             dimensions[0] - (1 if augmented else 0),
