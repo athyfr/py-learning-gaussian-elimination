@@ -1,5 +1,5 @@
 """Test module for the Matrix class."""
-from matrix import Matrix
+import matrix
 
 
 def test_init(
@@ -8,7 +8,7 @@ def test_init(
     """Test ``__init__()`` for exceptions, and correct assignments."""
     data, augmented = matrix_init_data_fixture
 
-    matrix = Matrix(data, augmented)
+    test_matrix = matrix.Matrix(data, augmented)
 
-    assert matrix.data == data
-    assert matrix.augmented == augmented
+    assert test_matrix.data == data
+    assert test_matrix.augmented == augmented
