@@ -18,6 +18,7 @@ def matrix_init_data_fixture(
 ) -> mtft.MatrixInitData:
     """Get initializer data for a Matrix."""
     matrix_dict: dict = request.param
+    matrix_dict.setdefault("augmented", False)
     return matrix_dict["data"], matrix_dict["augmented"]
 
 
