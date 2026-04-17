@@ -13,3 +13,13 @@ def test_init(
 
     assert test_matrix.data == data
     assert test_matrix.augmented == augmented
+
+
+def test_get_row_length(
+    matrix_class_with_init_data_fixture: mtft.MatrixWithInitData,
+) -> None:
+    """Test ``get_row_length()`` for incorrect output."""
+    test_matrix, (data, augmented) = matrix_class_with_init_data_fixture
+
+    assert test_matrix.get_row_length() \
+        == len(data) + (1 if augmented else 0)
