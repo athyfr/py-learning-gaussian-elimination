@@ -1,5 +1,7 @@
 import logging
 
+logger = logging.getLogger("matrix")
+
 # Type hint definitions:
 Data = list[list[float]]  # outer list is columns.
 Size = tuple[int, int]  # Excludes the augmented row if there is one.
@@ -101,17 +103,17 @@ class Matrix:
 
     def gaussian_elimination(self) -> None:
         """Performs Gaussian Elimination to bring the matrix to RREF."""
-        logging.info("Function `gaussian_elimination` called...")
+        logger.info("Function `gaussian_elimination` called...")
         # -- Forward steps
         active_row: int = 0
 
         leading_1_x_per_row: list[int] = []
 
         for active_col in range(self.size[0]):
-            logging.info("Performing forward steps on column %s.", active_col)
+            logger.info("Performing forward steps on column %s.", active_col)
             # Step 1: Swap out zero entries
             if self.data[active_col][active_row] == 0.0:
-                logging.info("This cell is zero! Attempting to swap rows..")
+                logger.info("This cell is zero! Attempting to swap rows..")
                 found_row: int = -1
                 # Look for a nonzero below
                 for row in range(active_row + 1, self.size[1]):
@@ -122,17 +124,17 @@ class Matrix:
                     # Swap, to get a nonzero here
                     self.swap_row(active_row, found_row)
                 else:
-                    logging.info(f"Giving up on column {active_col}.")
+                    logger.info(f"Giving up on column {active_col}.")
                     # Give up on this column.
                     break
 
             # Step 2: Normalize
             if self.data[active_col][active_row] != 1:
-                logging.info("Normalizing cell...")
+                logger.info("Normalizing cell...")
                 self.divide_row(active_row, self.data[active_col][active_row])
 
             # Step 3: Eliminate numbers under the active cell
-            logging.info("Eliminating zeroes...")
+            logger.info("Eliminating zeroes...")
             for row in range(active_row + 1, self.size[1]):
                 if self.data[active_col][row] != 0:
                     self.subtract_row(
@@ -146,9 +148,9 @@ class Matrix:
         for leading_1_y in range(len(leading_1_x_per_row)):
             active_col: int = leading_1_x_per_row[leading_1_y]
 
-            logging.info("Performing backward steps on column %s.", active_col)
+            logger.info("Performing backward steps on column %s.", active_col)
             # Eliminate numbers over the active cell
-            logging.info("Eliminating zeros...")
+            logger.info("Eliminating zeros...")
             for row in range(leading_1_y):
                 if self.data[active_col][row] != 0:
                     self.subtract_row(
