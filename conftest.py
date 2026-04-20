@@ -30,3 +30,22 @@ def matrix_class_with_init_data_fixture(
     data, augmented = matrix_init_data_fixture
 
     return matrix.Matrix(data, augmented), (data, augmented)
+
+
+@pytest.fixture
+def matrix_class_with_2_row_indices_fixture(
+    matrix_class_with_init_data_fixture: mtft.ClassWithInitData,
+) -> mtft.ClassWith2Randoms:
+    """Get a pre-initialized matrix with 2 random row indices."""
+    matrix = matrix_class_with_init_data_fixture[0]
+    rng = random.Random()
+
+    row_a, row_b = rng.choices(range(matrix.size[1]), k=2)
+
+    return matrix, row_a, row_b
+
+
+@pytest.fixture(params=[-2.5, -0.01, 0, 0.01, 2.5])
+def factor_fixture(request: pytest.FixtureRequest) -> float:
+    """Get a factor; relevant edge cases chosen."""
+    return request.param
