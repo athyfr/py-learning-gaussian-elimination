@@ -1,4 +1,5 @@
 """Test module for the Matrix class."""
+
 import matrix
 import matrix_types_for_tests as mtft
 

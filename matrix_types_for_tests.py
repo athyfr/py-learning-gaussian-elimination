@@ -4,3 +4,5 @@ import matrix
 
 InitData = tuple[matrix.Data, bool]
 ClassWithInitData = tuple[matrix.Matrix, InitData]
+ClassWith2Randoms = tuple[matrix.Matrix, int, int]
+Slice = list[float]
