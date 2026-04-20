@@ -40,6 +40,4 @@ def test_add_row(
 
     new_row_a: mtft.Slice = [x[row_a] for x in test_matrix.data]
 
-    assert all(
-        new_row_a[i] == expected_row_a[i] for i in range(test_matrix.size[0])
-    )
+    assert new_row_a == expected_row_a
