@@ -20,6 +20,6 @@ def test_get_row_length(
     matrix_class_with_init_data_fixture: mtft.ClassWithInitData,
 ) -> None:
     """Test ``get_row_length()`` for incorrect output."""
-    test_matrix, (data, augmented) = matrix_class_with_init_data_fixture
+    test_matrix, (data, _) = matrix_class_with_init_data_fixture
 
     assert test_matrix.get_row_length() == len(data)
