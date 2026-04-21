@@ -1,3 +1,10 @@
+[project]
+name = "gaussian_elimination"
+version = "0.0.1"
+
+[project.optional-dependencies]
+dev = ["pytest==9.0.2"]
+
 [tool.pytest]
 markers = ["excessive: Extra tests that are - perhaps - excessive."]
 minversion = "9.0"
