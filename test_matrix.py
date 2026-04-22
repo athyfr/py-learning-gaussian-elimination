@@ -47,3 +47,26 @@ def test_add_row(fixture_add_row: mtft.AddRowData) -> None:
     new_row_a: mtft.Slice = [x[row_a] for x in test_matrix.data]
 
     assert new_row_a == expected_row_a
+
+
+def fixture_subtract_row(
+    matrix_class_with_2_row_indices_fixture: mtft.ClassWith2Randoms,
+    factor_fixture: float,
+) -> mtft.AddRowData:
+    """Fixture handling the ``test_subtract_row`` setup & tear-down phases."""
+    test_matrix, row_a, row_b, _, expected_row_a = fixture_add_row(
+        matrix_class_with_2_row_indices_fixture,
+        -factor_fixture,
+    )
+
+    return test_matrix, row_a, row_b, factor_fixture, expected_row_a
+
+def test_subtract_row(fixture_subtract_row: mtft.AddRowData) -> None:
+    """Test ``add_row()``, ensuring the resulting Matrix is correct."""
+    test_matrix, row_a, row_b, factor, expected_row_a = fixture_subtract_row
+
+    test_matrix.subtract_row(row_a, row_b, factor)
+
+    new_row_a: mtft.Slice = [x[row_a] for x in test_matrix.data]
+
+    assert new_row_a == expected_row_a
