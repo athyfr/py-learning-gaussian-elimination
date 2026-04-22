@@ -3,7 +3,10 @@ name = "gaussian_elimination"
 version = "0.0.1"
 
 [project.optional-dependencies]
-dev = ["pytest==9.0.2"]
+dev = [
+    "pytest==9.0.2",
+    "debugpy==1.8.20",
+]
 
 [tool.pytest]
 markers = ["excessive: Extra tests that are - perhaps - excessive."]
