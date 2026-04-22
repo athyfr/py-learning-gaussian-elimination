@@ -100,3 +100,27 @@ def test_multiply_row(
     new_row: mtft.Slice = [x[row] for x in test_matrix.data]
 
     assert new_row == expected_row
+
+
+@pytest.fixture
+def fixture_divide_row(
+    matrix_class_with_1_row_index_fixture: mtft.ClassWith1Random,
+    factor_fixture: float,
+) -> mtft.MultiplyRowData:
+    """Fixture handling the ``test_divide_row`` setup & tear-down phases."""
+    test_matrix, row, _, expected_row = fixture_multiply_row(
+        matrix_class_with_1_row_index_fixture,
+        -factor_fixture,
+    )
+
+    return test_matrix, row, factor_fixture, expected_row
+
+def test_divide_row(fixture_divide_row: mtft.MultiplyRowData) -> None:
+    """Test ``divide_row()``, ensuring the resulting Matrix is correct."""
+    test_matrix, row, factor, expected_row = fixture_divide_row
+
+    test_matrix.divide_row(row, factor)
+
+    new_row: mtft.Slice = [x[row] for x in test_matrix.data]
+
+    assert new_row == expected_row
