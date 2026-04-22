@@ -1,4 +1,5 @@
 """Test module for the Matrix class."""
+import pytest
 
 import matrix
 import matrix_types_for_tests as mtft
@@ -25,6 +26,7 @@ def test_get_row_length(
     assert test_matrix.get_row_length() == len(data)
 
 
+@pytest.fixture
 def fixture_add_row(
     matrix_class_with_2_row_indices_fixture: mtft.ClassWith2Randoms,
     factor_fixture: float,
@@ -49,6 +51,7 @@ def test_add_row(fixture_add_row: mtft.AddRowData) -> None:
     assert new_row_a == expected_row_a
 
 
+@pytest.fixture
 def fixture_subtract_row(
     matrix_class_with_2_row_indices_fixture: mtft.ClassWith2Randoms,
     factor_fixture: float,
