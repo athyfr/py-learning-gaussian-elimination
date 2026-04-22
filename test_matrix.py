@@ -25,18 +25,24 @@ def test_get_row_length(
     assert test_matrix.get_row_length() == len(data)
 
 
-def test_add_row(
+def fixture_add_row(
     matrix_class_with_2_row_indices_fixture: mtft.ClassWith2Randoms,
     factor_fixture: float,
-) -> None:
-    """Test ``add_row()``, ensuring the resulting Matrix is correct."""
+) -> mtft.AddRowData:
+    """Fixture handling the ``test_add_row`` setup & tear-down phases."""
     test_matrix, row_a, row_b = matrix_class_with_2_row_indices_fixture
 
     expected_row_a: mtft.Slice = [
         x[row_a] + x[row_b] * factor_fixture for x in test_matrix.data
     ]
 
-    test_matrix.add_row(row_a, row_b, factor_fixture)
+    return test_matrix, row_a, row_b, factor_fixture, expected_row_a
+
+def test_add_row(fixture_add_row: mtft.AddRowData) -> None:
+    """Test ``add_row()``, ensuring the resulting Matrix is correct."""
+    test_matrix, row_a, row_b, factor, expected_row_a = fixture_add_row
+
+    test_matrix.add_row(row_a, row_b, factor)
 
     new_row_a: mtft.Slice = [x[row_a] for x in test_matrix.data]
 
