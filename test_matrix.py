@@ -92,7 +92,7 @@ def fixture_multiply_row(
 def test_multiply_row(
     fixture_multiply_row: mtft.MultiplyRowData,
 ) -> None:
-    """Test ``multiply_row(), ensuring the resulting Matrix is correct."""
+    """Test ``multiply_row()``, ensuring the resulting Matrix is correct."""
     test_matrix, row, factor, expected_row = fixture_multiply_row
 
     test_matrix.multiply_row(row, factor)
