@@ -73,3 +73,30 @@ def test_subtract_row(fixture_subtract_row: mtft.AddRowData) -> None:
     new_row_a: mtft.Slice = [x[row_a] for x in test_matrix.data]
 
     assert new_row_a == expected_row_a
+
+
+@pytest.fixture
+def fixture_multiply_row(
+    matrix_class_with_1_row_index_fixture: mtft.ClassWith1Random,
+    factor_fixture: float,
+) -> mtft.MultiplyRowData:
+    """Fixture handling the ``test_multiply_row`` setup & tear-down phases."""
+    test_matrix, row = matrix_class_with_1_row_index_fixture
+
+    expected_row: mtft.Slice = [
+        x[row] * factor_fixture for x in test_matrix.data
+    ]
+
+    return test_matrix, row, factor_fixture, expected_row
+
+def test_multiply_row(
+    fixture_multiply_row: mtft.MultiplyRowData,
+) -> None:
+    """Test ``multiply_row(), ensuring the resulting Matrix is correct."""
+    test_matrix, row, factor, expected_row = fixture_multiply_row
+
+    test_matrix.multiply_row(row, factor)
+
+    new_row: mtft.Slice = [x[row] for x in test_matrix.data]
+
+    assert new_row == expected_row

@@ -34,6 +34,19 @@ def matrix_class_with_init_data_fixture(
 
 
 @pytest.fixture
+def matrix_class_with_1_row_index_fixture(
+    matrix_class_with_init_data_fixture: mtft.ClassWithInitData,
+) -> mtft.ClassWith1Random:
+    """Get a pre-initialized matrix with 1 random row index."""
+    matrix = matrix_class_with_init_data_fixture[0]
+    rng = random.Random()
+
+    row = rng.choice(range(matrix.size[1]))
+
+    return matrix, row
+
+
+@pytest.fixture
 def matrix_class_with_2_row_indices_fixture(
     matrix_class_with_init_data_fixture: mtft.ClassWithInitData,
 ) -> mtft.ClassWith2Randoms:
