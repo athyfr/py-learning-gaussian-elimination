@@ -37,8 +37,8 @@
 
   "matrix_2x2_augmented_rref_1": {
     "data": [
-      [1, 0, 1],
-      [0, 1, 2]
+      [1, 0, 1.8],
+      [0, 1, 0.6]
     ],
     "augmented": true,
     "rref": true
@@ -51,5 +51,15 @@
     ],
     "augmented": true,
     "rref": true
-  }
+  },
+
+  "matrix_3x3_augmented_1": {
+    "data": [
+      [1, 1, 1, 30],
+      [0, -2, 1, 0],
+      [-1, 1, 1, 0]
+    ],
+    "augmented": true,
+    "rref": "matrix_3x3_augmented_rref_1"
+  } 
 }
