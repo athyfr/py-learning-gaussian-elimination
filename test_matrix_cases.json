@@ -3,14 +3,16 @@
     "data": [
       [1, 0],
       [0, 1]
-    ]
+    ],
+    "rref": true
   },
 
   "matrix_2x2_all_zeros": {
     "data": [
       [0, 0],
       [0, 0]
-    ]
+    ],
+    "rref": true
   },
 
   "matrix_3x3_augmented_rref": {
@@ -19,7 +21,8 @@
       [0, 0, 0, 0],
       [0, 0, 1, 3]
     ],
-    "augmented": true
+    "augmented": true,
+    "rref": true
   },
 
   "matrix_6x3_augmented_rref": {
@@ -28,7 +31,8 @@
       [0, 0, 0, 0, 1, 5],
       [0, 0, 0, 0, 0, 0]
     ],
-    "augmented": true
+    "augmented": true,
+    "rref": true
   },
 
   "matrix_2x2_augmented_rref": {
@@ -36,7 +40,8 @@
       [1, 0, 1],
       [0, 1, 2]
     ],
-    "augmented": true
+    "augmented": true,
+    "rref": true
   },
 
   "matrix_2x2_augmented_rref_inconsistent": {
@@ -44,6 +49,7 @@
       [1, 1, 0],
       [0, 0, 1]
     ],
-    "augmented": true
+    "augmented": true,
+    "rref": true
   }
 }
