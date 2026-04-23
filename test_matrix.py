@@ -31,7 +31,7 @@ def fixture_add_row(
     matrix_class_with_2_row_indices_fixture: mtft.ClassWith2Randoms,
     factor_fixture: float,
 ) -> mtft.AddRowData:
-    """Fixture handling the ``test_add_row`` setup & tear-down phases."""
+    """Fixture handling the ``test_add_row`` setup phases."""
     test_matrix, row_a, row_b = matrix_class_with_2_row_indices_fixture
 
     expected_row_a: mtft.Slice = [
@@ -56,7 +56,7 @@ def fixture_subtract_row(
     matrix_class_with_2_row_indices_fixture: mtft.ClassWith2Randoms,
     factor_fixture: float,
 ) -> mtft.AddRowData:
-    """Fixture handling the ``test_subtract_row`` setup & tear-down phases."""
+    """Fixture handling the ``test_subtract_row`` setup phases."""
     test_matrix, row_a, row_b, _, expected_row_a = fixture_add_row(
         matrix_class_with_2_row_indices_fixture,
         -factor_fixture,
@@ -80,7 +80,7 @@ def fixture_multiply_row(
     matrix_class_with_1_row_index_fixture: mtft.ClassWith1Random,
     factor_fixture: float,
 ) -> mtft.MultiplyRowData:
-    """Fixture handling the ``test_multiply_row`` setup & tear-down phases."""
+    """Fixture handling the ``test_multiply_row`` setup phases."""
     test_matrix, row = matrix_class_with_1_row_index_fixture
 
     expected_row: mtft.Slice = [
@@ -107,7 +107,7 @@ def fixture_divide_row(
     matrix_class_with_1_row_index_fixture: mtft.ClassWith1Random,
     factor_fixture: float,
 ) -> mtft.MultiplyRowData:
-    """Fixture handling the ``test_divide_row`` setup & tear-down phases."""
+    """Fixture handling the ``test_divide_row`` setup phases."""
     test_matrix, row, _, expected_row = fixture_multiply_row(
         matrix_class_with_1_row_index_fixture,
         -factor_fixture,
