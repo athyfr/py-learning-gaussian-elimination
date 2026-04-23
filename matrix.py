@@ -31,7 +31,6 @@ class Matrix:
         reflect_data: bool = False,
     ):
         """Initializes the matrix with the given matrix data."""
-
         # -- Reflect data (if needed)
 
         if reflect_data:
@@ -55,37 +54,37 @@ class Matrix:
         self.data = data
 
     def get_row_length(self) -> int:
-        """Gets the row length of the Matrix including any augmented row"""
+        """Gets the row length of the Matrix including any augmented row."""
         return self.size[0] + (1 if self.augmented else 0)
 
     def add_row(self, row_a: int, row_b: int, factor: float) -> None:
-        """Adds row ``row_b`` * ``factor`` to row ``row_a`` (replacing row ``row_a``) in the Matrix
+        r"""Adds row ``row_b`` * ``factor`` to row ``row_a`` in the Matrix.
 
-        Performs Elementary Row Operation 1 on row ``row_a``, adding row ``row_b`` with a factor of ``factor``.
+        Performs Elementary Row Operation 1 on row ``row_a``, adding row
+        ``row_b`` with a factor of ``factor``.
 
         The math expression this represents is as follows:
         .. math::
-            $$\\verb|factor| \\cdot R_{\\verb|row_b|} + R_{\\verb|row_a|} \\rightarrow R_{\\verb|row_a|}$$
+            $$\verb|factor| \cdot R_{\verb|row_b|} + R_{\verb|row_a|} \rightarrow R_{\verb|row_a|}$$
 
         Row arguments indicate indices.
 
         Args:
             row_a: The index of the row to add to, (and change).
             row_b: The index of addend row.
-            factor: What to multiply row ``row_b`` by before adding to row ``row_a``.
+            factor: What to multiply row ``row_b`` by before adding to
+                    row ``row_a``.
         """
-
         for col in range(self.get_row_length()):
             self.data[col][row_a] += self.data[col][row_b] * factor
 
     def subtract_row(self, row_a: int, row_b: int, factor: float) -> None:
-        """Subtracts row `row_b` * `factor` from row `row_a`"""
+        """Subtracts row `row_b` * `factor` from row `row_a`."""
         for col in range(self.get_row_length()):
             self.data[col][row_a] -= self.data[col][row_b] * factor
 
     def multiply_row(self, row: int, factor: float) -> None:
         """Multiplies row ``row`` by ``factor``."""
-
         for col in range(self.get_row_length()):
             self.data[col][row] *= factor
 
