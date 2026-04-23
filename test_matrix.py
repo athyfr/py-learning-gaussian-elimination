@@ -1,4 +1,6 @@
 """Test module for the Matrix class."""
+import copy
+
 import pytest
 
 import matrix
@@ -124,3 +126,27 @@ def test_divide_row(fixture_divide_row: mtft.MultiplyRowData) -> None:
     new_row: mtft.Slice = [x[row] for x in test_matrix.data]
 
     assert new_row == expected_row
+
+
+@pytest.fixture
+def fixture_swap_row(
+    matrix_class_with_2_row_indices_fixture: mtft.ClassWith2Randoms,
+) -> mtft.SwapRowData:
+    """Fixture handling the ``test_swap_row`` setup phase."""
+    test_matrix, row_a, row_b = matrix_class_with_2_row_indices_fixture
+
+    expected_data: matrix.Data = copy.deepcopy(test_matrix.data)
+
+    orig_row_a = expected_data[row_a]
+    expected_data[row_a] = expected_data[row_b]
+    expected_data[row_b] = orig_row_a
+
+    return test_matrix, row_a, row_b, expected_data
+
+def test_swap_row(fixture_swap_row: mtft.SwapRowData) -> None:
+    """Test ``swap_row()``, ensuring the resulting Matrix is correct."""
+    test_matrix, row_a, row_b, expected_data = fixture_swap_row
+
+    test_matrix.swap_row(row_a, row_b)
+
+    assert test_matrix.data == expected_data
