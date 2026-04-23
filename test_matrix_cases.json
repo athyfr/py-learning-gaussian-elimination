@@ -1,5 +1,5 @@
 {
-  "matrix_2x2_rref": {
+  "matrix_2x2_rref_1": {
     "data": [
       [1, 0],
       [0, 1]
@@ -7,7 +7,7 @@
     "rref": true
   },
 
-  "matrix_2x2_all_zeros": {
+  "matrix_2x2_all_zeros_1": {
     "data": [
       [0, 0],
       [0, 0]
@@ -15,7 +15,7 @@
     "rref": true
   },
 
-  "matrix_3x3_augmented_rref": {
+  "matrix_3x3_augmented_rref_1": {
     "data": [
       [1, 0, 0, 1],
       [0, 0, 0, 0],
@@ -25,7 +25,7 @@
     "rref": true
   },
 
-  "matrix_6x3_augmented_rref": {
+  "matrix_6x3_augmented_rref_1": {
     "data": [
       [0, 1, 2, 3, 0, 4],
       [0, 0, 0, 0, 1, 5],
@@ -35,7 +35,7 @@
     "rref": true
   },
 
-  "matrix_2x2_augmented_rref": {
+  "matrix_2x2_augmented_rref_1": {
     "data": [
       [1, 0, 1],
       [0, 1, 2]
@@ -44,7 +44,7 @@
     "rref": true
   },
 
-  "matrix_2x2_augmented_rref_inconsistent": {
+  "matrix_2x2_augmented_rref_inconsistent_1": {
     "data": [
       [1, 1, 0],
       [0, 0, 1]
