@@ -1,6 +1,4 @@
 """Convenient type annotations for use with testing."""
-import types
-
 import matrix
 
 # Types for general-purpose fixtures.
