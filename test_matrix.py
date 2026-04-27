@@ -8,24 +8,24 @@ import matrix_types_for_tests as mtft
 
 
 def test_init(
-    matrix_init_data_fixture: mtft.InitData,
+    matrix_info_fixture: mtft.Info,
 ) -> None:
     """Test ``__init__()`` for exceptions, and correct assignments."""
-    data, augmented = matrix_init_data_fixture
+    info = matrix_info_fixture
 
-    test_matrix = matrix.Matrix(data, augmented)
+    test_matrix = matrix.Matrix(info["data"], info["augmented"])
 
-    assert test_matrix.data == data
-    assert test_matrix.augmented == augmented
+    assert test_matrix.data == info["data"]
+    assert test_matrix.augmented == info["augmented"]
 
 
 def test_get_row_length(
-    matrix_class_with_init_data_fixture: mtft.ClassWithInitData,
+    matrix_class_with_info_fixture: mtft.ClassWithInfo,
 ) -> None:
     """Test ``get_row_length()`` for incorrect output."""
-    test_matrix, (data, _) = matrix_class_with_init_data_fixture
+    test_matrix, info = matrix_class_with_info_fixture
 
-    assert test_matrix.get_row_length() == len(data)
+    assert test_matrix.get_row_length() == len(info["data"])
 
 
 @pytest.fixture

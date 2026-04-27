@@ -13,32 +13,31 @@ with Path("test_matrix_cases.json").open() as f:
     matrices: dict[str, dict] = json.load(f)
 
 
-@pytest.fixture(params=matrices.values(), ids=matrices.keys())
-def matrix_init_data_fixture(
+@pytest.fixture(scope="session", params=matrices.values(), ids=matrices.keys())
+def matrix_info_fixture(
     request: pytest.FixtureRequest,
-) -> mtft.InitData:
+) -> mtft.Info:
     """Get initializer data for a Matrix."""
     matrix_dict: dict = request.param
     matrix_dict.setdefault("augmented", False)
-    return matrix_dict["data"], matrix_dict["augmented"]
+    return matrix_dict
 
 
 @pytest.fixture
-def matrix_class_with_init_data_fixture(
-    matrix_init_data_fixture: mtft.InitData,
-) -> mtft.ClassWithInitData:
+def matrix_class_with_info_fixture(
+    matrix_info_fixture: mtft.Info,
+) -> mtft.ClassWithInfo:
     """Get a pre-initialized Matrix along with init data."""
-    data, augmented = matrix_init_data_fixture
-
-    return matrix.Matrix(data, augmented), (data, augmented)
+    inf = matrix_info_fixture.copy()
+    return matrix.Matrix(inf["data"], inf["augmented"]), inf
 
 
 @pytest.fixture
 def matrix_class_with_1_row_index_fixture(
-    matrix_class_with_init_data_fixture: mtft.ClassWithInitData,
+    matrix_class_with_info_fixture: mtft.ClassWithInfo,
 ) -> mtft.ClassWith1Random:
     """Get a pre-initialized matrix with 1 random row index."""
-    matrix = matrix_class_with_init_data_fixture[0]
+    matrix = matrix_class_with_info_fixture[0]
     rng = random.Random()
 
     row = rng.choice(range(matrix.size[1]))
@@ -48,10 +47,10 @@ def matrix_class_with_1_row_index_fixture(
 
 @pytest.fixture
 def matrix_class_with_2_row_indices_fixture(
-    matrix_class_with_init_data_fixture: mtft.ClassWithInitData,
+    matrix_class_with_info_fixture: mtft.ClassWithInfo,
 ) -> mtft.ClassWith2Randoms:
     """Get a pre-initialized matrix with 2 random row indices."""
-    matrix = matrix_class_with_init_data_fixture[0]
+    matrix = matrix_class_with_info_fixture[0]
     rng = random.Random()
 
     row_a, row_b = rng.choices(range(matrix.size[1]), k=2)

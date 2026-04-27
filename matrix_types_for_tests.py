@@ -2,8 +2,8 @@
 import matrix
 
 # Types for general-purpose fixtures.
-InitData = tuple[matrix.Data, bool]
-ClassWithInitData = tuple[matrix.Matrix, InitData]
+Info = dict
+ClassWithInfo = tuple[matrix.Matrix, Info]
 ClassWith1Random = tuple[matrix.Matrix, int]
 ClassWith2Randoms = tuple[matrix.Matrix, int, int]
 Slice = list[float]
