@@ -1,16 +1,10 @@
-import json
 import random
-from pathlib import Path
 
 import pytest
 
 import matrix
 import matrix_types_for_tests as mtft
-
-# Load example matrices from JSON file.
-matrices: dict[str, dict]
-with Path("matrix_test_cases.json").open() as f:
-    matrices: dict[str, dict] = json.load(f)
+from matrix_test_cases import matrices
 
 
 @pytest.fixture(scope="session", params=matrices.values(), ids=matrices.keys())

@@ -5,6 +5,7 @@ import pytest
 
 import matrix
 import matrix_types_for_tests as mtft
+from matrix_test_cases import matrices
 
 
 def test_init(
@@ -150,3 +151,14 @@ def test_swap_row(fixture_swap_row: mtft.SwapRowData) -> None:
     test_matrix.swap_row(row_a, row_b)
 
     assert test_matrix.data == expected_data
+
+
+def test_gaussian_elimination(
+    matrix_class_with_info_fixture: mtft.ClassWithInfo,
+) -> None:
+    """Test ``gaussian_elimination()``, ensuring correct output."""
+    test_matrix, info = matrix_class_with_info_fixture
+
+    test_matrix.gaussian_elimination()
+
+    assert test_matrix.data == matrices[info["rref"]]["data"]
