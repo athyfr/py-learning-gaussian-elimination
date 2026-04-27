@@ -60,10 +60,11 @@ def fixture_subtract_row(
     factor_fixture: float,
 ) -> mtft.AddRowData:
     """Fixture handling the ``test_subtract_row`` setup phases."""
-    test_matrix, row_a, row_b, _, expected_row_a = fixture_add_row(
-        matrix_class_with_2_row_indices_fixture,
-        -factor_fixture,
-    )
+    test_matrix, row_a, row_b = matrix_class_with_2_row_indices_fixture
+
+    expected_row_a: mtft.Slice = [
+        x[row_a] - x[row_b] * factor_fixture for x in test_matrix.data
+    ]
 
     return test_matrix, row_a, row_b, factor_fixture, expected_row_a
 
@@ -111,10 +112,11 @@ def fixture_divide_row(
     factor_fixture: float,
 ) -> mtft.MultiplyRowData:
     """Fixture handling the ``test_divide_row`` setup phases."""
-    test_matrix, row, _, expected_row = fixture_multiply_row(
-        matrix_class_with_1_row_index_fixture,
-        -factor_fixture,
-    )
+    test_matrix, row = matrix_class_with_1_row_index_fixture
+
+    expected_row: mtft.Slice = [
+        x[row] / factor_fixture for x in test_matrix.data
+    ]
 
     return test_matrix, row, factor_fixture, expected_row
 
