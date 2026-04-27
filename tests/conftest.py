@@ -9,7 +9,7 @@ import matrix_types_for_tests as mtft
 
 # Load example matrices from JSON file.
 matrices: dict[str, dict]
-with Path("test_matrix_cases.json").open() as f:
+with Path("matrix_test_cases.json").open() as f:
     matrices: dict[str, dict] = json.load(f)
 
 
