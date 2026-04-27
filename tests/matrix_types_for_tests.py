@@ -10,5 +10,5 @@ Slice = list[float]
 
 # Types for test-specific fixtures. (setup/teardown)
 AddRowData = tuple[matrix.Matrix, int, int, float, Slice]
-MultiplyRowData = tuple[matrix.Matrix, int, float, Slice]
+MultiplyRowData = tuple[matrix.Matrix, int, float, Slice | None]
 SwapRowData = tuple[matrix.Matrix, int, int, matrix.Data]

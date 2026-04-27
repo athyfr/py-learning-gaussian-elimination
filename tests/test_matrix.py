@@ -114,9 +114,12 @@ def fixture_divide_row(
     """Fixture handling the ``test_divide_row`` setup phases."""
     test_matrix, row = matrix_class_with_1_row_index_fixture
 
-    expected_row: mtft.Slice = [
-        x[row] / factor_fixture for x in test_matrix.data
-    ]
+    expected_row: mtft.Slice | None = None
+
+    if factor_fixture != 0:
+        expected_row: mtft.Slice = [
+            x[row] / factor_fixture for x in test_matrix.data
+        ]
 
     return test_matrix, row, factor_fixture, expected_row
 
@@ -124,11 +127,14 @@ def test_divide_row(fixture_divide_row: mtft.MultiplyRowData) -> None:
     """Test ``divide_row()``, ensuring the resulting Matrix is correct."""
     test_matrix, row, factor, expected_row = fixture_divide_row
 
-    test_matrix.divide_row(row, factor)
-
-    new_row: mtft.Slice = [x[row] for x in test_matrix.data]
-
-    assert new_row == expected_row
+    if factor != 0:
+        test_matrix.divide_row(row, factor)
+        new_row: mtft.Slice = [x[row] for x in test_matrix.data]
+        assert new_row == expected_row
+    # Expect the divide by zero error
+    else:
+        with pytest.raises(ZeroDivisionError):
+            test_matrix.divide_row(row, factor)
 
 
 @pytest.fixture
