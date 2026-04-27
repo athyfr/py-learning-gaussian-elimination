@@ -7,7 +7,11 @@ import matrix_types_for_tests as mtft
 from matrix_test_cases import matrices
 
 
-@pytest.fixture(scope="session", params=matrices.values(), ids=matrices.keys())
+@pytest.fixture(
+    scope="session",
+    params=matrices.values(),
+    ids=list(matrices.keys()),
+)
 def matrix_info_fixture(
     request: pytest.FixtureRequest,
 ) -> mtft.Info:
