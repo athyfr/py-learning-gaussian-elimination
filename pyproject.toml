@@ -4,8 +4,8 @@ version = "0.0.1"
 
 [project.optional-dependencies]
 dev = [
-    "pytest==9.0.2",
-    "debugpy==1.8.20",
+  "pytest==9.0.2",
+  "debugpy==1.8.20",
 ]
 
 [tool.pytest]
