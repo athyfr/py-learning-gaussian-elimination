@@ -41,7 +41,7 @@ def cast_input_list[_T](
     cancel_str: str = "cancel",
     additional_conditions: dict[str, Callable[[list[_T]], bool]] | None = None,
     error_message: str = "Invalid entry! Try again!",
-) -> list[Any] | None:
+) -> list[_T] | None:
     if additional_conditions is None:
         additional_conditions = {}
 
@@ -57,7 +57,7 @@ def cast_input_list[_T](
             if num_val > -1 and len(input_str_list) != num_val:
                 raise ValueError
 
-            input_val: list[Any] = [in_type(x) for x in input_str_list]
+            input_val: list[_T] = [in_type(x) for x in input_str_list]
 
             success: bool = True
             for message, condition in additional_conditions.items():
