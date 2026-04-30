@@ -77,7 +77,7 @@ def cast_input_list[_T](
 
 def num_to_str(num: int | float) -> str:
     """Convert a number to a string, stripping off decimals if possible."""
-    if num is int:
+    if type(num) is int:
         return str(num)
 
     output: str = str(num).removesuffix(".0")
