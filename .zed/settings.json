@@ -4,7 +4,7 @@
     "shell": {
       "with_arguments": {
         "program": "devenv",
-        "args": ["shell"],
+        "args": ["shell", "--offline"],
         "title_override": "Gaussian Elimination — Devenv"
       }
     }
