@@ -55,20 +55,20 @@ def cast_input_list[_T](
             input_str_list: list[str] = input_str.split(",")
 
             if num_val > -1 and len(input_str_list) != num_val:
-                raise ValueError
+                print("Wrong number of entries given! Try again.")
+                continue
 
             input_val: list[_T] = [in_type(x) for x in input_str_list]
 
             success: bool = True
+
             for message, condition in additional_conditions.items():
                 if not condition(input_val):
                     print(message)
                     success = False
 
-            if not success:
-                continue
-
-            return input_val
+            if success:
+                return input_val
         except ValueError:
             print(error_message)
 
