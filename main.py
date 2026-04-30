@@ -97,7 +97,7 @@ def case_check_matrix(given_matrix: Matrix) -> Matrix:
 
     # - Find each column's width
     num_col: int = given_matrix.get_row_length()
-    column_width: list[int] = [0 for i in range(num_col)]
+    column_width: list[int] = [0 for _ in range(num_col)]
 
     for col in range(given_matrix.get_row_length()):
         for cell in given_matrix.data[col]:
@@ -145,7 +145,7 @@ def case_replace_matrix(given_matrix: Matrix) -> Matrix:
         print("Cancelling operation...")
         return given_matrix
 
-    data = [[] for i in range(num_columns)]
+    data = [[] for _ in range(num_columns)]
 
     print()
     print("Enter each element of each row, separated by commas.")
