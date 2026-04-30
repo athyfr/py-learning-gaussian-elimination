@@ -201,7 +201,8 @@ def case_replace_matrix_cell(given_matrix: Matrix) -> Matrix:
     num_col: int = given_matrix.get_row_length()
     num_row: int = given_matrix.size[1]
     cell_coord: list[int] | None = cast_input_list(
-        "Which cell? (x and y separated by comma): ", int, 2, additional_conditions = {
+        "Which cell? (x and y separated by comma): ", int, 2,
+        additional_conditions = {
             f"x must be within range (0 - {num_col-1})":
                 lambda val: val[0] >= 0 and val[0] < num_col,
             f"y must be within range (0 - {num_row-1})":
