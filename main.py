@@ -252,7 +252,8 @@ def case_add_row(given_matrix: Matrix) -> Matrix:
         return given_matrix
 
     factor: float | None = cast_input(
-        f"What will row {row_b} be multiplied by before being added to {row_a}?: ",
+        f"What will row {row_b} be multiplied by\
+        before being added to {row_a}?: ",
         float,
     )
 
@@ -296,7 +297,8 @@ def case_subtract_row(given_matrix: Matrix) -> Matrix:
         return given_matrix
 
     factor: float | None = cast_input(
-        f"What will row {row_b} be multiplied by before being subtracted from {row_a}?: ",
+        f"What will row {row_b} be multiplied by\
+        before being subtracted from {row_a}?: ",
         float,
     )
 
