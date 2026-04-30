@@ -15,8 +15,7 @@ class Matrix:
 
     Attributes:
         data: The core matrix data that is operated upon.
-        dimensions: The size of the matrix data
-
+        dimensions: The size of the matrix, excluding augmented rows.
     """
 
     data: Data
