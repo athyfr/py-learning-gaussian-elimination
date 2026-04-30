@@ -3,13 +3,13 @@ from collections.abc import Callable
 from matrix import Matrix
 
 
-def cast_input[_T](
+def cast_input[T](
     prompt: str,
-    in_type: Callable[[str], _T],
+    in_type: Callable[[str], T],
     cancel_str: str = "cancel",
-    additional_conditions: dict[str, Callable[[_T], bool]] | None = None,
+    additional_conditions: dict[str, Callable[[T], bool]] | None = None,
     error_message: str = "Invalid entry! Try again!",
-) -> _T | None:
+) -> T | None:
     """Get input from the user, validating and casting it."""
     if additional_conditions is None:
         additional_conditions = {}
@@ -35,14 +35,14 @@ def cast_input[_T](
             print(error_message)
 
 
-def cast_input_list[_T](
+def cast_input_list[T](
     prompt: str,
-    in_type: Callable[[str], _T],
+    in_type: Callable[[str], T],
     num_val: int = -1,
     cancel_str: str = "cancel",
-    additional_conditions: dict[str, Callable[[list[_T]], bool]] | None = None,
+    additional_conditions: dict[str, Callable[[list[T]], bool]] | None = None,
     error_message: str = "Invalid entry! Try again!",
-) -> list[_T] | None:
+) -> list[T] | None:
     """Get input from user, validating and casting it to a list."""
     if additional_conditions is None:
         additional_conditions = {}
@@ -60,7 +60,7 @@ def cast_input_list[_T](
                 print("Wrong number of entries given! Try again.")
                 continue
 
-            input_val: list[_T] = [in_type(x) for x in input_str_list]
+            input_val: list[T] = [in_type(x) for x in input_str_list]
 
             success: bool = True
 
