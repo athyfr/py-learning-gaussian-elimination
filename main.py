@@ -197,7 +197,7 @@ def case_replace_matrix_cell(given_matrix: Matrix) -> Matrix:
                 lambda val: val[0] < 0 or val[0] >= num_col,
             f"y must be within range (0 - {num_row-1})":
                 lambda val: val[1] < 0 or val[1] >= num_row,
-        },
+        },  # ty:ignore[invalid-argument-type]
     )
 
     cell_content: float | None = cast_input(
@@ -221,7 +221,7 @@ def case_add_row(given_matrix: Matrix) -> Matrix:
         additional_conditions = {
             f"Row must be within range (0 - {num_row-1})":
                 lambda val: val < 0 or val >= num_row,
-        },
+        },  # ty:ignore[invalid-argument-type]
     )
 
     if row_a is None:
@@ -233,7 +233,7 @@ def case_add_row(given_matrix: Matrix) -> Matrix:
         additional_conditions = {
             f"Row must be within range (0 - {num_row-1})":
                 lambda val: val < 0 or val >= num_row,
-        },
+        },  # ty:ignore[invalid-argument-type]
     )
 
     if row_b is None:
@@ -264,7 +264,7 @@ def case_subtract_row(given_matrix: Matrix) -> Matrix:
         additional_conditions = {
             f"Row must be within range (0 - {num_row-1})":
                 lambda val: val < 0 or val >= num_row,
-        },
+        },  # ty:ignore[invalid-argument-type]
     )
 
     if row_a is None:
@@ -276,7 +276,7 @@ def case_subtract_row(given_matrix: Matrix) -> Matrix:
         additional_conditions = {
             f"Row must be within range (0 - {num_row-1})":
                 lambda val: val >= 0 and val < num_row,
-        },
+        },  # ty:ignore[invalid-argument-type]
     )
 
     if row_b is None:
@@ -309,7 +309,7 @@ def case_multiply_row(given_matrix: Matrix) -> Matrix:
         additional_conditions = {
             f"Row must be within range (0 - {num_row-1})":
                 lambda val: val >= 0 and val < num_row,
-        },
+        },  # ty:ignore[invalid-argument-type]
     )
 
     if row is None:
@@ -339,7 +339,7 @@ def case_divide_row(given_matrix: Matrix) -> Matrix:
         additional_conditions = {
             f"Row must be within range (0 - {num_row-1})":
                 lambda val: val >= 0 and val < num_row,
-        },
+        },  # ty:ignore[invalid-argument-type]
     )
 
     if row is None:
@@ -369,7 +369,7 @@ def case_swap_row(given_matrix: Matrix) -> Matrix:
         additional_conditions = {
             f"Row must be within range (0 - {num_row-1})":
                 lambda val: val >= 0 and val < num_row,
-        },
+        },  # ty:ignore[invalid-argument-type]
     )
 
     if row_a is None:
@@ -381,7 +381,7 @@ def case_swap_row(given_matrix: Matrix) -> Matrix:
         additional_conditions = {
             f"Row must be within range (0 - {num_row-1})":
                 lambda val: val >= 0 and val < num_row,
-        },
+        },  # ty:ignore[invalid-argument-type]
     )
 
     if row_b is None:
@@ -449,7 +449,7 @@ def main() -> None:
             additional_conditions={
                 "\nChoice number out of range! Try again!":
                     lambda val: val >= 0 and val < len(options),
-            },
+            },  # ty:ignore[invalid-argument-type]
             error_message="\nThat wasn't a number! Try again!",
         )
 
