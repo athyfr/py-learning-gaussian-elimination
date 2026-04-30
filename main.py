@@ -408,7 +408,7 @@ def case_gaussian_elimination(given_matrix: Matrix) -> Matrix:
     return given_matrix
 
 
-def main():
+def main() -> None:
     running: bool = True
 
     current_matrix: Matrix = Matrix(
