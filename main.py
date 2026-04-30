@@ -203,9 +203,9 @@ def case_replace_matrix_cell(given_matrix: Matrix) -> Matrix:
     cell_coord: list[int] | None = cast_input_list(
         "Which cell? (x and y separated by comma): ", int, 2, additional_conditions = {
             f"x must be within range (0 - {num_col-1})":
-                lambda val: val[0] < 0 or val[0] >= num_col,
+                lambda val: val[0] >= 0 and val[0] < num_col,
             f"y must be within range (0 - {num_row-1})":
-                lambda val: val[1] < 0 or val[1] >= num_row,
+                lambda val: val[1] >= 0 and val[1] < num_row,
         },  # ty:ignore[invalid-argument-type]
     )
 
@@ -230,7 +230,7 @@ def case_add_row(given_matrix: Matrix) -> Matrix:
         "Which row will be added to?: ", int,
         additional_conditions = {
             f"Row must be within range (0 - {num_row-1})":
-                lambda val: val < 0 or val >= num_row,
+                lambda val: val >= 0 and val < num_row,
         },  # ty:ignore[invalid-argument-type]
     )
 
@@ -242,7 +242,7 @@ def case_add_row(given_matrix: Matrix) -> Matrix:
         f"Which row will be added to row {row_a}?: ", int,
         additional_conditions = {
             f"Row must be within range (0 - {num_row-1})":
-                lambda val: val < 0 or val >= num_row,
+                lambda val: val >= 0 and val < num_row,
         },  # ty:ignore[invalid-argument-type]
     )
 
@@ -274,7 +274,7 @@ def case_subtract_row(given_matrix: Matrix) -> Matrix:
         "Which row will be subtracted from?: ", int,
         additional_conditions = {
             f"Row must be within range (0 - {num_row-1})":
-                lambda val: val < 0 or val >= num_row,
+                lambda val: val >= 0 and val < num_row,
         },  # ty:ignore[invalid-argument-type]
     )
 
