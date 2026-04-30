@@ -10,6 +10,7 @@ def cast_input[_T](
     additional_conditions: dict[str, Callable[[_T], bool]] | None = None,
     error_message: str = "Invalid entry! Try again!",
 ) -> _T | None:
+    """Get input from the user, validating and casting it."""
     if additional_conditions is None:
         additional_conditions = {}
 
@@ -42,6 +43,7 @@ def cast_input_list[_T](
     additional_conditions: dict[str, Callable[[list[_T]], bool]] | None = None,
     error_message: str = "Invalid entry! Try again!",
 ) -> list[_T] | None:
+    """Get input from user, validating and casting it to a list."""
     if additional_conditions is None:
         additional_conditions = {}
 
@@ -74,6 +76,7 @@ def cast_input_list[_T](
 
 
 def num_to_str(num: int | float) -> str:
+    """Convert a number to a string, stripping off decimals if possible."""
     if num is int:
         return str(num)
 
@@ -85,7 +88,11 @@ def num_to_str(num: int | float) -> str:
     return output
 
 
+# ---- Cases: Options that can be chosen from command-line. ----
+
+
 def case_check_matrix(given_matrix: Matrix) -> Matrix:
+    """Case for printing the Matrix to the terminal."""
     print("Printing matrix...")
 
     # - Find each column's width
@@ -125,6 +132,7 @@ def case_check_matrix(given_matrix: Matrix) -> Matrix:
 
 
 def case_replace_matrix(given_matrix: Matrix) -> Matrix:
+    """Case for the user replacing the data in the Matrix."""
     data: list[list[float]]
 
     #TODO: Modify case to use new Matrix reflect initializer argument.
@@ -189,6 +197,7 @@ def case_replace_matrix(given_matrix: Matrix) -> Matrix:
 
 
 def case_replace_matrix_cell(given_matrix: Matrix) -> Matrix:
+    """Case to replace *one* cell of the Matrix."""
     num_col: int = given_matrix.get_row_length()
     num_row: int = given_matrix.size[1]
     cell_coord: list[int] | None = cast_input_list(
@@ -214,6 +223,7 @@ def case_replace_matrix_cell(given_matrix: Matrix) -> Matrix:
 
 
 def case_add_row(given_matrix: Matrix) -> Matrix:
+    """Case to add rows in the Matrix."""
     num_row: int = given_matrix.size[1]
 
     row_a: int | None = cast_input(
@@ -257,6 +267,7 @@ def case_add_row(given_matrix: Matrix) -> Matrix:
 
 
 def case_subtract_row(given_matrix: Matrix) -> Matrix:
+    """Case to subtract rows in the Matrix."""
     num_row: int = given_matrix.size[1]
 
     row_a: int | None = cast_input(
@@ -300,6 +311,7 @@ def case_subtract_row(given_matrix: Matrix) -> Matrix:
 
 
 def case_multiply_row(given_matrix: Matrix) -> Matrix:
+    """Case to multiply rows in the Matrix."""
     num_row: int = given_matrix.size[1]
 
     print(num_row)
@@ -332,6 +344,7 @@ def case_multiply_row(given_matrix: Matrix) -> Matrix:
 
 
 def case_divide_row(given_matrix: Matrix) -> Matrix:
+    """Case to divide rows in the Matrix."""
     num_row = given_matrix.size[1]
 
     row: int | None = cast_input(
@@ -362,6 +375,7 @@ def case_divide_row(given_matrix: Matrix) -> Matrix:
 
 
 def case_swap_row(given_matrix: Matrix) -> Matrix:
+    """Case to swap rows in the Matrix."""
     num_row: int = given_matrix.size[1]
 
     row_a: int | None = cast_input(
@@ -396,6 +410,7 @@ def case_swap_row(given_matrix: Matrix) -> Matrix:
 
 
 def case_gaussian_elimination(given_matrix: Matrix) -> Matrix:
+    """Case to non-interactively put the Matrix into RREF."""
     given_matrix.gaussian_elimination()
 
     if not given_matrix.augmented:
@@ -409,6 +424,7 @@ def case_gaussian_elimination(given_matrix: Matrix) -> Matrix:
 
 
 def main() -> None:
+    """Main runtime function for the program."""
     running: bool = True
 
     current_matrix: Matrix = Matrix(
@@ -462,5 +478,6 @@ def main() -> None:
         current_matrix = option_values[choice](current_matrix)
 
 
+# Run the main program if this isn't an import.
 if __name__ == "__main__":
     main()
